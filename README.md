@@ -1,6 +1,7 @@
 App fyrir android síma sem er fyrir netkaffi þar sem hægt er að leigja tölvur o.fl.
 
-Ásgeir Snær
-Ólafur Ingi
-Róbert Nökkvi
-<br /> Vigdís Erla - ves14@hi.is
+Höfundar:
+<br /> Ásgeir Snær - asm34
+<br /> Ólafur Ingi - oik69
+<br /> Róbert Nökkvi - RbrtNkvi
+<br /> Vigdís Erla - ves14
