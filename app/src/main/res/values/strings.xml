@@ -5,6 +5,7 @@
     <string name="title_notifications">Notifications</string>
     <string name="login_button">Login</string>
     <string name="signup_button">Sign Up</string>
+    <string name="create_account_button">Create an account</string>
     <string name="username_hint">Username</string>
     <string name="password_hint">Password</string>
 </resources>

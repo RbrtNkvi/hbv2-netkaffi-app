@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:paddingTop="?attr/actionBarSize">
 
+
     <Button
         android:id="@+id/signup_button"
         android:layout_width="wrap_content"
@@ -25,10 +26,10 @@
         android:layout_height="50dp"
         android:hint="@string/username_hint"
         android:inputType="textVisiblePassword|textNoSuggestions"
-        android:paddingHorizontal="10dp"
+        android:paddingLeft="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.478" />
@@ -39,7 +40,7 @@
         android:layout_height="50dp"
         android:hint="@string/password_hint"
         android:inputType="textPassword"
-        android:paddingHorizontal="10dp"
+        android:paddingLeft="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
