@@ -15,6 +15,7 @@ import hi.netkaffi.R
 import hi.netkaffi.activities.BookingActivity
 import hi.netkaffi.activities.MainActivity
 import hi.netkaffi.databinding.FragmentHomeBinding
+import hi.netkaffi.service.dummyData
 
 
 class HomeFragment : Fragment() {
@@ -38,7 +39,13 @@ class HomeFragment : Fragment() {
 
         val listView: ListView = binding.products
         val arrayAdapter: ArrayAdapter<*>
-        val products = arrayOf("computer1","computer2","laptop")
+        if(dummyData.products.getProducts().isEmpty()){
+            dummyData.products.addProduct("Computer 1")
+            dummyData.products.addProduct("Computer 2")
+            dummyData.products.addProduct("Laptop 1")
+        }
+
+        val products = dummyData.products.getProducts()
         val context = context as MainActivity
         arrayAdapter = ArrayAdapter(
             context,
