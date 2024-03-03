@@ -30,8 +30,8 @@ class LoginActivity : AppCompatActivity() {
             val password = findViewById<EditText>(R.id.login_password)
             //Toast.makeText(this,password.text,Toast.LENGTH_LONG).show()
 
-            //val intentMain = Intent(this, MainActivity::class.java)
-            //startActivity(intentMain)
+            val intentMain = Intent(this, MainActivity::class.java)
+            startActivity(intentMain)
         }
 
 
