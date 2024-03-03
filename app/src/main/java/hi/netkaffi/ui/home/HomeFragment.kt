@@ -1,18 +1,21 @@
 package hi.netkaffi.ui.home
 
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import hi.netkaffi.activities.HomeActivity
+import hi.netkaffi.R
+import hi.netkaffi.activities.BookingActivity
 import hi.netkaffi.activities.MainActivity
 import hi.netkaffi.databinding.FragmentHomeBinding
+
 
 class HomeFragment : Fragment() {
 
@@ -41,6 +44,11 @@ class HomeFragment : Fragment() {
             context,
             android.R.layout.simple_list_item_1 ,products)
         listView.adapter = arrayAdapter
+        listView.setOnItemClickListener { adapterView, view, i, l ->
+            val intent = Intent(context, BookingActivity::class.java)
+            intent.putExtra("productName",listView.getItemAtPosition(i) as String)
+            startActivity(intent)
+        }
         return root
     }
 
