@@ -5,3 +5,8 @@ Höfundar:
 <br /> Ólafur Ingi - oik69
 <br /> Róbert Nökkvi - RbrtNkvi
 <br /> Vigdís Erla - ves14
+
+
+Dummy temp account
+  Username: 123
+  Password: 123
