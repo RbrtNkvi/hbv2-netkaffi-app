@@ -6,7 +6,7 @@ Höfundar:
 <br /> Róbert Nökkvi - RbrtNkvi
 <br /> Vigdís Erla - ves14
 
-
+<br />
 Dummy temp account
-  Username: 123
-  Password: 123
+<br />   Username: 123
+<br />   Password: 123
