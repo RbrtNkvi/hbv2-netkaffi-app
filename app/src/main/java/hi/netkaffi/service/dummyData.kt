@@ -1,6 +1,8 @@
 package hi.netkaffi.service
-
+ import android.util.Log
+ import hi.netkaffi.entities.User
 class dummyData {
+
     object data{
         private val list = ArrayList<String>()
         fun getData(): ArrayList<String> {
@@ -25,6 +27,38 @@ class dummyData {
 
         fun removeProduct(index: Int){
             list.removeAt(index)
+        }
+    }
+    object Users {
+        private val list_users = ArrayList<User>()
+
+        fun getUsers(): ArrayList<User> {
+            return list_users
+        }
+        fun isUsername(user2: User): Boolean{
+            for (user in list_users){
+                return user.name != user2.name
+            }
+            return true
+        }
+
+        fun isUser(user2: User): Boolean{
+            for (user in list_users){
+                if (user.name == user2.name)
+                    if (user.password == user2.password)
+                        return true
+            }
+            return false
+        }
+        fun addUsers(user: User) {
+            list_users.add(user)
+            val temp = list_users.size.toString()
+            print(temp)
+
+        }
+
+        fun removeUsers(index: Int) {
+            list_users.removeAt(index)
         }
     }
 }
