@@ -1,5 +1,3 @@
 package hi.netkaffi.service
 
-class SettingsService {
-
-}
+class SettingsService

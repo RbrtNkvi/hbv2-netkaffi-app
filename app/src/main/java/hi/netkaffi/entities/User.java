@@ -1,7 +1,7 @@
 package hi.netkaffi.entities;
 
 public class User {
-    private String name;
+    private String username;
     private String password;
     private Boolean isAdmin;
 
@@ -9,16 +9,16 @@ public class User {
     }
 
     public User(String name, String password) {
-        this.name = name;
+        this.username = name;
         this.password = password;
     }
 
     public String getName() {
-        return name;
+        return username;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.username = name;
     }
 
     public String getPassword() {

@@ -1,4 +1,3 @@
 package hi.netkaffi.service
 
-class ProductService {
-}
+class ProductService
