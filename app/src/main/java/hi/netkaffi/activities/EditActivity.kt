@@ -9,6 +9,7 @@ import hi.netkaffi.databinding.ActivityEditBinding
 import hi.netkaffi.service.dummyData.products.getProducts
 import hi.netkaffi.service.dummyData.products.removeProduct
 import hi.netkaffi.service.dummyData
+import hi.netkaffi.service.dummyData.data.removeData
 
 class EditActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditBinding
@@ -45,7 +46,7 @@ class EditActivity : AppCompatActivity() {
             val index = getProducts().indexOf(selectedItem)
             if (index != -1) {
                 // Remove the selected item from the list
-                removeProduct(index)
+                removeData(index)
             }
             // Finish the activity after removing the item
             finish()

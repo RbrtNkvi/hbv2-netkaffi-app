@@ -12,6 +12,9 @@ class dummyData {
         fun addData(product: String) {
             list.add(product)
         }
+        fun removeData(index: Int){
+            list.removeAt(index)
+        }
     }
 
     object products {

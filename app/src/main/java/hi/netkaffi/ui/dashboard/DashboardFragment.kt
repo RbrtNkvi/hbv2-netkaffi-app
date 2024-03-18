@@ -48,10 +48,14 @@ class DashboardFragment : Fragment() {
         listView.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
                 val selectedItem = parent.getItemAtPosition(position) as String
+                val productName = selectedItem.dropLast(2)
+
                 // Assuming you have an EditActivity to edit the selected item
                 val intent = Intent(context, EditActivity::class.java)
                 // Pass the selected item's data to the EditActivity using extras
                 intent.putExtra("selectedItem", selectedItem)
+                intent.putExtra("productName", productName)
+
                 startActivity(intent)
             }
 
