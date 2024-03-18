@@ -35,10 +35,11 @@ class DashboardFragment : Fragment() {
         val root: View = binding.root
 
         val listView: ListView = binding.bookedList
+        val context = context as MainActivity
 
         val listData: ArrayList<String> = dummyData.data.getData()
         val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(
-            requireContext(), // Use requireContext() instead of context as it's safer
+            context, // Use requireContext() instead of context as it's safer
             R.layout.simple_list_item_1, listData
         )
         listView.adapter = arrayAdapter

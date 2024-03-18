@@ -1,24 +1,54 @@
-package hi.netkaffi.activities;
+package hi.netkaffi.activities
 
-import android.os.Bundle;
-import android.widget.EditText;
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent
+import android.os.Bundle
+import android.widget.NumberPicker
+import androidx.appcompat.app.AppCompatActivity
+import hi.netkaffi.R
+import hi.netkaffi.databinding.ActivityEditBinding
+import hi.netkaffi.service.dummyData.products.getProducts
+import hi.netkaffi.service.dummyData.products.removeProduct
+import hi.netkaffi.service.dummyData
 
-import hi.netkaffi.R;
+class EditActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityEditBinding
 
-public class EditActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityEditBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         // Retrieve the selected item's data from the intent extras
-        String selectedItem = getIntent().getStringExtra("selectedItem");
+        val selectedItem = intent.getStringExtra("selectedItem")
 
-        // Assuming you have EditText fields in your layout to edit the data
-        EditText editText = findViewById(R.id.editText);
-        // Set the retrieved data to the EditText
-        editText.setText(selectedItem);
+        // Set the product name and price
+        val productName = intent.extras?.getString("productName")
+        binding.productName.text = productName
+        binding.productPrice.text = "1500"
+
+        // Set up the number picker
+        binding.picker1.maxValue = 23
+        binding.picker1.minValue = 0
+
+        // Set OnClickListener for the edit button
+        binding.editButton.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            val booking = "${binding.productName.text} ${binding.picker1.value}"
+            dummyData.data.addData(booking)
+            startActivity(intent)
+        }
+
+        // Set OnClickListener for the remove button
+        binding.removeButton.setOnClickListener {
+            // Find the index of the selected item
+            val index = getProducts().indexOf(selectedItem)
+            if (index != -1) {
+                // Remove the selected item from the list
+                removeProduct(index)
+            }
+            // Finish the activity after removing the item
+            finish()
+        }
     }
 }

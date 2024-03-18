@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="bookingButton" type="id" />
+    <item name="removeButton" type="id" />
+    <item name="editButton" type="id" />
+
+
 </resources>
