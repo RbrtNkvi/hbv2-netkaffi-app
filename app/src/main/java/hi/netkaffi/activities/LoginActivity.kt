@@ -35,12 +35,13 @@ class LoginActivity : AppCompatActivity() {
 
 
             val user = User(username,password)
-            if(dummyData.Users.isUser(user)){
+            if (dummyData.Users.isUser(user)){
                 val intentMain = Intent(this, MainActivity::class.java)
                 startActivity(intentMain)
             }
-            else
-            Toast.makeText(this,"Wrong Username or Password",Toast.LENGTH_LONG).show()
+            else {
+                Toast.makeText(this,"Wrong Username or Password",Toast.LENGTH_LONG).show()
+            }
 
 
         }

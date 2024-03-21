@@ -12,6 +12,16 @@ class dummyData {
         fun addData(product: String) {
             list.add(product)
         }
+
+        fun updateData(index: Int, updatedBooking: String) {
+            if (index in 0 until list.size) {
+                list[index] = updatedBooking
+            }
+        }
+
+        fun removeData(booking: String) {
+            list.remove(booking)
+        }
     }
 
     object products {
@@ -37,14 +47,14 @@ class dummyData {
         }
         fun isUsername(user2: User): Boolean{
             for (user in list_users){
-                return user.name != user2.name
+                return user.username != user2.username
             }
             return true
         }
 
         fun isUser(user2: User): Boolean{
             for (user in list_users){
-                if (user.name == user2.name)
+                if (user.username == user2.username)
                     if (user.password == user2.password)
                         return true
             }

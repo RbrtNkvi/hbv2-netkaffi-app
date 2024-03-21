@@ -52,12 +52,30 @@ class DashboardFragment : Fragment() {
                 val intent = Intent(context, EditActivity::class.java)
                 // Pass the selected item's data to the EditActivity using extras
                 intent.putExtra("selectedItem", selectedItem)
+                intent.putExtra("selectedItemIndex", position)
                 startActivity(intent)
             }
 
-
         return root
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        // Reload data from dummyData
+        val listData = dummyData.data.getData()
+
+        // Update the adapter with the new data
+        val arrayAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_list_item_1,
+            listData
+        )
+
+        // Set the adapter to the ListView
+        binding.bookedList.adapter = arrayAdapter
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
