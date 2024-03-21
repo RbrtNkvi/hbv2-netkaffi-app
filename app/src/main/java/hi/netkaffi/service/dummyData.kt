@@ -1,37 +1,83 @@
 package hi.netkaffi.service
- import android.util.Log
+ import hi.netkaffi.entities.Booking
+ import hi.netkaffi.entities.Product
  import hi.netkaffi.entities.User
+
 class dummyData {
 
-    object data{
-        private val list = ArrayList<String>()
-        fun getData(): ArrayList<String> {
+    object bookings{
+        private val list = ArrayList<Booking>()
+        fun getBookings(): ArrayList<Booking> {
             return list
         }
 
-        fun addData(product: String) {
-            list.add(product)
+        fun getBookingsNames(): ArrayList<String> {
+            val names = ArrayList<String>()
+            for (booking in list) {
+                names.add(booking.product.name + " " + booking.startTime)
+            }
+            return names
         }
 
-        fun updateData(index: Int, updatedBooking: String) {
+        fun addBooking(booking: Booking) {
+            list.add(booking)
+        }
+
+        fun getBookingsByUser(user: User): ArrayList<Booking>{
+            val userlist = ArrayList<Booking>()
+            for (booking in list) {
+                if (booking.user == user) {
+                    userlist.add(booking)
+                }
+            }
+            return userlist
+        }
+
+        fun getBooking(user: User, product: Product, date: String, startTime: Long): Booking? {
+            for (booking in list) {
+                if (booking.user == user && booking.product == product && booking.date == date && booking.startTime == startTime) {
+                    return booking
+                }
+            }
+            return null
+        }
+
+        fun updateBooking(index: Int, updatedBooking: Booking) {
             if (index in 0 until list.size) {
                 list[index] = updatedBooking
             }
         }
 
-        fun removeData(booking: String) {
+        fun removeBooking(booking: Booking) {
             list.remove(booking)
         }
     }
 
     object products {
-        private val list = ArrayList<String>()
+        private val list = ArrayList<Product>()
 
-        fun getProducts(): ArrayList<String> {
+        fun getProducts(): ArrayList<Product> {
             return list
         }
 
-        fun addProduct(product: String) {
+        fun getProductsNames(): ArrayList<String> {
+            val names = ArrayList<String>()
+            for (product in list) {
+                names.add(product.name)
+            }
+            return names
+        }
+
+        fun getProduct(name: String): Product? {
+            for (product in list) {
+                if (product.name == name) {
+                    return product
+                }
+            }
+            return null
+        }
+
+        fun addProduct(product: Product) {
             list.add(product)
         }
 
@@ -59,6 +105,15 @@ class dummyData {
                         return true
             }
             return false
+        }
+
+        fun getUser(username: String): User? {
+            for (user in list_users) {
+                if (user.username == username) {
+                    return user
+                }
+            }
+            return null
         }
         fun addUsers(user: User) {
             list_users.add(user)

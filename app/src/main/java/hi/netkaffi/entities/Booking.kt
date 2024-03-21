@@ -1,12 +1,10 @@
 package hi.netkaffi.entities
 
-import java.util.Date
-
 class Booking(
-    var uName: List<User>,
-    var pName: List<Product>,
+    var user: User,
+    var product: Product,
     var startTime: Long,
-    var date: Date
+    var date: String
 ) {
     fun getEndTime(): Long {
         // TODO: Implement this method

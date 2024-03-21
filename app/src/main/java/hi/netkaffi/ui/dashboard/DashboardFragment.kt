@@ -1,22 +1,18 @@
 package hi.netkaffi.ui.dashboard
 
-import android.R
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import hi.netkaffi.activities.EditActivity
 import hi.netkaffi.activities.MainActivity
 import hi.netkaffi.databinding.FragmentDashboardBinding
 import hi.netkaffi.service.dummyData
-import android.widget.AdapterView
-import hi.netkaffi.activities.EditActivity
 
 class DashboardFragment : Fragment() {
 
@@ -28,19 +24,17 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
-
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val listView: ListView = binding.bookedList
-        val context = context as MainActivity
+        val context = requireContext() as MainActivity
 
-        val listData: ArrayList<String> = dummyData.data.getData()
+        val listData: ArrayList<String> = dummyData.bookings.getBookingsNames()
         val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(
-            context, // Use requireContext() instead of context as it's safer
-            R.layout.simple_list_item_1, listData
+            context,
+            android.R.layout.simple_list_item_1,
+            listData
         )
         listView.adapter = arrayAdapter
 
@@ -49,10 +43,11 @@ class DashboardFragment : Fragment() {
             AdapterView.OnItemClickListener { parent, view, position, id ->
                 val selectedItem = parent.getItemAtPosition(position) as String
                 // Assuming you have an EditActivity to edit the selected item
+                val booking = dummyData.bookings.getBookings()[position]
                 val intent = Intent(context, EditActivity::class.java)
-                // Pass the selected item's data to the EditActivity using extras
                 intent.putExtra("selectedItem", selectedItem)
                 intent.putExtra("selectedItemIndex", position)
+                intent.putExtra("bookingDate", booking.date)
                 startActivity(intent)
             }
 
@@ -63,7 +58,7 @@ class DashboardFragment : Fragment() {
         super.onResume()
 
         // Reload data from dummyData
-        val listData = dummyData.data.getData()
+        val listData = dummyData.bookings.getBookingsNames()
 
         // Update the adapter with the new data
         val arrayAdapter = ArrayAdapter(
