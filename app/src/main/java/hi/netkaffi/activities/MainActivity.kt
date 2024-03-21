@@ -24,8 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         //binding2 = ActivityLoginBinding.inflate(layoutInflater)
         //setContentView(R.layout.activity_login)
-
-
+        
         val navView: BottomNavigationView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
