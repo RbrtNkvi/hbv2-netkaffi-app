@@ -5,16 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import hi.netkaffi.R
 import hi.netkaffi.activities.BookingActivity
 import hi.netkaffi.activities.MainActivity
 import hi.netkaffi.databinding.FragmentHomeBinding
+import hi.netkaffi.entities.Product
 import hi.netkaffi.service.dummyData
 
 
@@ -40,12 +38,12 @@ class HomeFragment : Fragment() {
         val listView: ListView = binding.products
         val arrayAdapter: ArrayAdapter<*>
         if(dummyData.products.getProducts().isEmpty()){
-            dummyData.products.addProduct("Computer 1")
-            dummyData.products.addProduct("Computer 2")
-            dummyData.products.addProduct("Laptop 1")
+            dummyData.products.addProduct(Product("Computer 1", "default", 1500, false))
+            dummyData.products.addProduct(Product("Computer 2", "default", 1500, false))
+            dummyData.products.addProduct(Product("Laptop 1", "default", 1500, false))
         }
 
-        val products = dummyData.products.getProducts()
+        val products = dummyData.products.getProductsNames()
         val context = context as MainActivity
         arrayAdapter = ArrayAdapter(
             context,

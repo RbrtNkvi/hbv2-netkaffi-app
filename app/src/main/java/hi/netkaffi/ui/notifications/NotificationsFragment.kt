@@ -8,11 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import hi.netkaffi.activities.BookingActivity
 import hi.netkaffi.activities.MainActivity
 import hi.netkaffi.activities.NewProductActivity
 import hi.netkaffi.databinding.FragmentNotificationsBinding
@@ -37,7 +34,7 @@ class NotificationsFragment : Fragment() {
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val products = dummyData.products.getProducts()
+        val products = dummyData.products.getProductsNames()
         val context = context as MainActivity
         val arrayAdapter = ArrayAdapter(
             context,
