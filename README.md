@@ -1,6 +1,6 @@
 # Hugbúnaðarverkefni 2 2024 - Hópur 4
 
-## Valið Verkefni: Android app fyrir netkaffi þar sem hægt er að leigja tölvur
+## Verkefni: Android app fyrir netkaffi þar sem hægt er að leigja tölvur
 
 
 ## Hópmeðlimir:
@@ -16,13 +16,13 @@
 - [x] `login og sign-up` - notandi getur signað up og loggað sig inn
 - [x] `booking` - notandi getur bókað tölvu á ákveðnum degi og í ákveðinn tíma
 - [x] `edit` - notandi getur breytt sinni bókun
+- [x] `computers` - admin getur skoðað og breytt lista yfir tölvur sem má leigja út
 - [ ] `bakendi` - tenging við gagnagrunn
 - [ ] `favorite` - notandi getur "favorite-að" tölvu og hún þá birst á öðrum favorite-lista
 - [ ] `admin-edit/delete` - admin getur breytt og eytt bókunum, notendum og tölvum
 - [ ] `QR` - notandi getur skannað qr kóða og þannig bókað
 
 
-<br />
 ##### Dummy temp account
-<br />   Username: 123
-<br />   Password: 123
+-  Username: 123
+-  Password: 123
