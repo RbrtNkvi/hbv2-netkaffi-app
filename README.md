@@ -16,10 +16,10 @@
 - [x] `login og sign-up` - notandi getur signað up og loggað sig inn
 - [x] `booking` - notandi getur bókað tölvu á ákveðnum degi og í ákveðinn tíma
 - [x] `edit` - notandi getur breytt sinni bókun
-- [] `bakendi` - tenging við gagnagrunn
-- [] `favorite` - notandi getur "favorite-að" tölvu og hún þá birst á öðrum favorite-lista
-- [] `admin-edit/delete` - admin getur breytt og eytt bókunum, notendum og tölvum
-- [] `QR` - notandi getur skannað qr kóða og þannig bókað
+- [ ] `bakendi` - tenging við gagnagrunn
+- [ ] `favorite` - notandi getur "favorite-að" tölvu og hún þá birst á öðrum favorite-lista
+- [ ] `admin-edit/delete` - admin getur breytt og eytt bókunum, notendum og tölvum
+- [ ] `QR` - notandi getur skannað qr kóða og þannig bókað
 
 
 <br />
