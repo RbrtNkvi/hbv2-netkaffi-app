@@ -10,12 +10,10 @@ import hi.netkaffi.R
 import hi.netkaffi.databinding.ActivityBookingBinding
 import hi.netkaffi.entities.Booking
 import hi.netkaffi.entities.User
-import hi.netkaffi.service.dummyData
+import hi.netkaffi.service.DummyData
 import java.util.Calendar
 
 class BookingActivity : AppCompatActivity() {
-
-    private var _binding: ActivityBookingBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,14 +21,17 @@ class BookingActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val productName = intent.extras?.getString("productName")
-        val product = dummyData.products.getProduct(productName.toString())
+        val index = intent.getIntExtra("selectedItemIndex", -1)
+        if (index == -1) {
+            throw Error("No product found")
+        }
+        val product = DummyData.Products.getProducts()[index]
+
         val textProductName: TextView = findViewById(R.id.productName)
         val textProductPrice: TextView = findViewById(R.id.productPrice)
-        if (product != null) {
-            textProductName.text = product.name
-            textProductPrice.text = product.price.toString()
-        }
+
+        textProductName.text = product.name
+        textProductPrice.text = product.price.toString()
 
         val picker: NumberPicker = findViewById(R.id.picker1)
         picker.maxValue = 23
@@ -41,23 +42,15 @@ class BookingActivity : AppCompatActivity() {
             val selectedTime = picker.value.toLong()
             val selectedDate = binding.pickDate.text.toString()
 
-            val user = User("example_user_id", "John Doe")
+            val user = User("example_user_id", "John Doe", false) //TODO: FIX LATER
 
-            val booking = if (product != null) {
-                Booking(user, product, selectedTime, selectedDate) // Store the booking date in the 'date' field
-            } else {
-                null
-            }
-
-            if (booking != null) {
-                dummyData.bookings.addBooking(booking)
-            }
+            val booking = Booking(user, product, selectedTime, selectedDate)
+            DummyData.Bookings.addBooking(booking)
 
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
-        // Set up the pickDate button click listener
         binding.pickDate.setOnClickListener {
             showDatePickerDialog(binding.pickDate)
         }

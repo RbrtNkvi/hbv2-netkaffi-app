@@ -9,11 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import hi.netkaffi.activities.MainActivity
 import hi.netkaffi.activities.NewProductActivity
 import hi.netkaffi.databinding.FragmentNotificationsBinding
-import hi.netkaffi.service.dummyData
+import hi.netkaffi.service.DummyData
 
 class NotificationsFragment : Fragment() {
 
@@ -28,27 +27,25 @@ class NotificationsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val notificationsViewModel =
-            ViewModelProvider(this).get(NotificationsViewModel::class.java)
 
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val products = dummyData.products.getProductsNames()
+        val products = DummyData.Products.getProductsNames()
         val context = context as MainActivity
         val arrayAdapter = ArrayAdapter(
             context,
             R.layout.simple_list_item_1 ,products)
         val listView = binding.productList
         listView.adapter = arrayAdapter
-        listView.setOnItemClickListener { adapterView, view, i, l ->
-            dummyData.products.removeProduct(i)
+        listView.setOnItemClickListener { _, _, position, _ ->
+            DummyData.Products.removeProduct(position)
             val intent = Intent(context, MainActivity::class.java)
             startActivity(intent)
         }
 
         val button = binding.addProduct
-        button.setOnClickListener { view ->
+        button.setOnClickListener { _ ->
             val intent = Intent(context, NewProductActivity::class.java)
             startActivity(intent)
         }

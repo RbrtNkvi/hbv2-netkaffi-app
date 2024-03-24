@@ -3,9 +3,9 @@ package hi.netkaffi.service
  import hi.netkaffi.entities.Product
  import hi.netkaffi.entities.User
 
-class dummyData {
+class DummyData {
 
-    object bookings{
+    object Bookings{
         private val list = ArrayList<Booking>()
         fun getBookings(): ArrayList<Booking> {
             return list
@@ -24,13 +24,13 @@ class dummyData {
         }
 
         fun getBookingsByUser(user: User): ArrayList<Booking>{
-            val userlist = ArrayList<Booking>()
+            val userList = ArrayList<Booking>()
             for (booking in list) {
                 if (booking.user == user) {
-                    userlist.add(booking)
+                    userList.add(booking)
                 }
             }
-            return userlist
+            return userList
         }
 
         fun getBooking(user: User, product: Product, date: String, startTime: Long): Booking? {
@@ -53,7 +53,7 @@ class dummyData {
         }
     }
 
-    object products {
+    object Products {
         private val list = ArrayList<Product>()
 
         fun getProducts(): ArrayList<Product> {
@@ -98,10 +98,10 @@ class dummyData {
             return true
         }
 
-        fun isUser(user2: User): Boolean{
+        fun isUser(username: String, password: String): Boolean{
             for (user in list_users){
-                if (user.username == user2.username)
-                    if (user.password == user2.password)
+                if (user.username == username)
+                    if (user.password == password)
                         return true
             }
             return false

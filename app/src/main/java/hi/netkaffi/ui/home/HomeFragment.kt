@@ -8,12 +8,11 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import hi.netkaffi.activities.BookingActivity
 import hi.netkaffi.activities.MainActivity
 import hi.netkaffi.databinding.FragmentHomeBinding
 import hi.netkaffi.entities.Product
-import hi.netkaffi.service.dummyData
+import hi.netkaffi.service.DummyData
 
 
 class HomeFragment : Fragment() {
@@ -29,29 +28,26 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val listView: ListView = binding.products
         val arrayAdapter: ArrayAdapter<*>
-        if(dummyData.products.getProducts().isEmpty()){
-            dummyData.products.addProduct(Product("Computer 1", "default", 1500, false))
-            dummyData.products.addProduct(Product("Computer 2", "default", 1500, false))
-            dummyData.products.addProduct(Product("Laptop 1", "default", 1500, false))
+        if(DummyData.Products.getProducts().isEmpty()){
+            DummyData.Products.addProduct(Product("Computer 1", "default", 1500, false))
+            DummyData.Products.addProduct(Product("Computer 2", "default", 1500, false))
+            DummyData.Products.addProduct(Product("Laptop 1", "default", 1500, false))
         }
 
-        val products = dummyData.products.getProductsNames()
+        val products = DummyData.Products.getProductsNames()
         val context = context as MainActivity
         arrayAdapter = ArrayAdapter(
             context,
             android.R.layout.simple_list_item_1 ,products)
         listView.adapter = arrayAdapter
-        listView.setOnItemClickListener { adapterView, view, i, l ->
+        listView.setOnItemClickListener { _, _, position, _ ->
             val intent = Intent(context, BookingActivity::class.java)
-            intent.putExtra("productName",listView.getItemAtPosition(i) as String)
+            intent.putExtra("selectedItemIndex", position)
             startActivity(intent)
         }
         return root

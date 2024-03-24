@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import hi.netkaffi.activities.EditActivity
 import hi.netkaffi.activities.MainActivity
 import hi.netkaffi.databinding.FragmentDashboardBinding
-import hi.netkaffi.service.dummyData
+import hi.netkaffi.service.DummyData
 
 class DashboardFragment : Fragment() {
 
@@ -30,7 +30,7 @@ class DashboardFragment : Fragment() {
         val listView: ListView = binding.bookedList
         val context = requireContext() as MainActivity
 
-        val listData: ArrayList<String> = dummyData.bookings.getBookingsNames()
+        val listData: ArrayList<String> = DummyData.Bookings.getBookingsNames()
         val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(
             context,
             android.R.layout.simple_list_item_1,
@@ -40,17 +40,11 @@ class DashboardFragment : Fragment() {
 
         // Set item click listener to handle item clicks
         listView.onItemClickListener =
-            AdapterView.OnItemClickListener { parent, view, position, id ->
-                val selectedItem = parent.getItemAtPosition(position) as String
-                // Assuming you have an EditActivity to edit the selected item
-                val booking = dummyData.bookings.getBookings()[position]
+            AdapterView.OnItemClickListener { _, _, position, _ ->
                 val intent = Intent(context, EditActivity::class.java)
-                intent.putExtra("selectedItem", selectedItem)
                 intent.putExtra("selectedItemIndex", position)
-                intent.putExtra("bookingDate", booking.date)
                 startActivity(intent)
             }
-
         return root
     }
 
@@ -58,7 +52,7 @@ class DashboardFragment : Fragment() {
         super.onResume()
 
         // Reload data from dummyData
-        val listData = dummyData.bookings.getBookingsNames()
+        val listData = DummyData.Bookings.getBookingsNames()
 
         // Update the adapter with the new data
         val arrayAdapter = ArrayAdapter(

@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import hi.netkaffi.databinding.ActivityEditBinding
 import hi.netkaffi.entities.Booking
-import hi.netkaffi.service.dummyData
+import hi.netkaffi.service.DummyData
 import java.util.Calendar
 
 class EditActivity : AppCompatActivity() {
@@ -19,24 +19,22 @@ class EditActivity : AppCompatActivity() {
         setContentView(view)
 
         // Retrieve the selected item's data from the intent extras
-        val selectedItem = intent.getStringExtra("selectedItem")
-        val selectedDate = intent.getStringExtra("bookingDate")
-
-        // Extract computer name and booking time from the selected item
-        val parts = selectedItem?.split(" ")
-        val computerName = parts?.dropLast(1)?.joinToString(" ")
-        val bookingTime = parts?.last()
-
+        val index = intent.getIntExtra("selectedItemIndex", -1)
+        val bookings = DummyData.Bookings.getBookings()
+        if (index == -1) {
+            throw Error("No booking found")
+        }
+        val booking = bookings[index]
         // Set the computer name and booking time
-        binding.productName.text = computerName
-        binding.productPrice.text = "1500" // Assuming you have a fixed price
+        binding.productName.text = booking.product.name
+        binding.productPrice.text = booking.product.price.toString()
 
         // Set up the number picker
         binding.picker1.maxValue = 23
         binding.picker1.minValue = 0
-        binding.picker1.value = bookingTime?.toIntOrNull() ?: 0
+        binding.picker1.value = booking.startTime.toInt()
 
-        binding.pickDate.text = selectedDate
+        binding.pickDate.text = booking.date
 
         // Set OnClickListener for the pickDate button
         binding.pickDate.setOnClickListener {
@@ -45,28 +43,19 @@ class EditActivity : AppCompatActivity() {
 
         // Set OnClickListener for the edit button
         binding.editButton.setOnClickListener {
-            val updatedBooking = "$computerName ${binding.picker1.value}"
-            val index = intent.getIntExtra("selectedItemIndex", -1)
-            if (index != -1) {
-                val booking = dummyData.bookings.getBookings()[index]
-                val updatedBookingObject = Booking(
-                    booking.user,
-                    booking.product,
-                    binding.picker1.value.toLong(),
-                    binding.pickDate.text.toString() // Update with the selected date
-                )
-                dummyData.bookings.updateBooking(index, updatedBookingObject)
-            }
+            val updatedBooking = Booking(
+                booking.user,
+                booking.product,
+                binding.picker1.value.toLong(),
+                binding.pickDate.text.toString()
+            )
+            DummyData.Bookings.updateBooking(index, updatedBooking)
             finish()
         }
 
         // Set OnClickListener for the remove button
         binding.removeButton.setOnClickListener {
-            if (selectedItem != null) {
-                val index = intent.getIntExtra("selectedItemIndex", -1)
-                val booking = dummyData.bookings.getBookings()[index]
-                dummyData.bookings.removeBooking(booking)
-            }
+            DummyData.Bookings.removeBooking(booking)
             finish()
         }
     }

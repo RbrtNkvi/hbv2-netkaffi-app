@@ -7,7 +7,7 @@ class Booking(
     var date: String
 ) {
     fun getEndTime(): Long {
-        // TODO: Implement this method
+        //TODO: Implement this method
         return 0L // Placeholder return value
     }
 }
