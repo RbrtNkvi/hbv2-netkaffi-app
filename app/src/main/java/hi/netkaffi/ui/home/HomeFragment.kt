@@ -12,8 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import hi.netkaffi.activities.BookingActivity
 import hi.netkaffi.activities.MainActivity
 import hi.netkaffi.databinding.FragmentHomeBinding
-import hi.netkaffi.entities.Product
-import hi.netkaffi.service.dummyData
+import hi.netkaffi.service.ProductService
+import hi.netkaffi.service.api.ProductCallback
 
 
 class HomeFragment : Fragment() {
@@ -37,23 +37,23 @@ class HomeFragment : Fragment() {
 
         val listView: ListView = binding.products
         val arrayAdapter: ArrayAdapter<*>
-        if(dummyData.products.getProducts().isEmpty()){
-            dummyData.products.addProduct(Product("Computer 1", "default", 1500, false))
-            dummyData.products.addProduct(Product("Computer 2", "default", 1500, false))
-            dummyData.products.addProduct(Product("Laptop 1", "default", 1500, false))
-        }
-
-        val products = dummyData.products.getProductsNames()
         val context = context as MainActivity
-        arrayAdapter = ArrayAdapter(
-            context,
-            android.R.layout.simple_list_item_1 ,products)
-        listView.adapter = arrayAdapter
-        listView.setOnItemClickListener { adapterView, view, i, l ->
-            val intent = Intent(context, BookingActivity::class.java)
-            intent.putExtra("productName",listView.getItemAtPosition(i) as String)
-            startActivity(intent)
-        }
+
+        val productService = ProductService()
+        productService.initialize(context)
+        productService.fetchProducts(url = "main", callback = ProductCallback {
+            val productsDatabase = ((it.filter{ !it.deleted }).map { it.name }).toCollection(ArrayList())
+            val arrayAdapter = ArrayAdapter(
+                context,
+                android.R.layout.simple_list_item_1, productsDatabase
+            )
+            listView.adapter = arrayAdapter
+            listView.setOnItemClickListener { adapterView, view, i, l ->
+                val intent = Intent(context, BookingActivity::class.java)
+                intent.putExtra("productName", listView.getItemAtPosition(i) as String)
+                startActivity(intent)
+            }
+        })
         return root
     }
 

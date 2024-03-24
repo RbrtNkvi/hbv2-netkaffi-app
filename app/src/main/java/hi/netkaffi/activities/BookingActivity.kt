@@ -10,8 +10,10 @@ import hi.netkaffi.R
 import hi.netkaffi.databinding.ActivityBookingBinding
 import hi.netkaffi.entities.Booking
 import hi.netkaffi.entities.User
+import hi.netkaffi.service.ProductService
 import hi.netkaffi.service.dummyData
 import java.util.Calendar
+import android.content.Context
 
 class BookingActivity : AppCompatActivity() {
 
@@ -24,43 +26,52 @@ class BookingActivity : AppCompatActivity() {
         setContentView(view)
 
         val productName = intent.extras?.getString("productName")
-        val product = dummyData.products.getProduct(productName.toString())
+
+        val context = this
+
         val textProductName: TextView = findViewById(R.id.productName)
         val textProductPrice: TextView = findViewById(R.id.productPrice)
-        if (product != null) {
-            textProductName.text = product.name
-            textProductPrice.text = product.price.toString()
-        }
 
-        val picker: NumberPicker = findViewById(R.id.picker1)
-        picker.maxValue = 23
-        picker.minValue = 0
-
-        // Set up the booking button click listener
-        binding.bookingButton.setOnClickListener {
-            val selectedTime = picker.value.toLong()
-            val selectedDate = binding.pickDate.text.toString()
-
-            val user = User("example_user_id", "John Doe")
-
-            val booking = if (product != null) {
-                Booking(user, product, selectedTime, selectedDate) // Store the booking date in the 'date' field
-            } else {
-                null
+        val productService = ProductService()
+        productService.initialize(context)
+        productService.fetchProduct("book/$productName", callback = {
+            if (it.isNotEmpty()) {
+                textProductName.text = it[0].name
+                textProductPrice.text = it[0].price.toString()
             }
 
-            if (booking != null) {
-                dummyData.bookings.addBooking(booking)
+            val product = it[0]
+
+            val picker: NumberPicker = findViewById(R.id.picker1)
+            picker.maxValue = 23
+            picker.minValue = 0
+
+            // Set up the booking button click listener
+            binding.bookingButton.setOnClickListener {
+                val selectedTime = picker.value.toLong()
+                val selectedDate = binding.pickDate.text.toString()
+
+                val user = User("example_user_id", "John Doe")
+
+                val booking = if (product != null) {
+                    Booking(user, product, selectedTime, selectedDate) // Store the booking date in the 'date' field
+                } else {
+                    null
+                }
+
+                if (booking != null) {
+                    dummyData.bookings.addBooking(booking)
+                }
+
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
             }
 
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
-
-        // Set up the pickDate button click listener
-        binding.pickDate.setOnClickListener {
-            showDatePickerDialog(binding.pickDate)
-        }
+            // Set up the pickDate button click listener
+            binding.pickDate.setOnClickListener {
+                showDatePickerDialog(binding.pickDate)
+            }
+        })
     }
 
     private fun showDatePickerDialog(dateTextView: TextView) {
