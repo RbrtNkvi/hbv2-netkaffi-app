@@ -21,7 +21,10 @@ class LoginActivity : AppCompatActivity() {
             val intentSignup = Intent(this, SignupActivity::class.java)
             startActivity(intentSignup)
         }
-        val tempUser = User("123","123", true) //TODO: FIX LATER
+        val tempUserAdmin = User("123","123", true) //TODO: FIX LATER
+        DummyData.Users.addUsers(tempUserAdmin)
+
+        val tempUser = User("321","321", false) //TODO: FIX LATER
         DummyData.Users.addUsers(tempUser)
 
         val buttonMain = findViewById<Button>(R.id.login_button)
@@ -31,9 +34,9 @@ class LoginActivity : AppCompatActivity() {
             val password = findViewById<EditText>(R.id.login_password).text.toString()
 
             if (DummyData.Users.isUser(username, password)){
-                val user = DummyData.Users.getUser(username);
+                val user = DummyData.Users.getUser(username)
                 val intentMain = Intent(this, MainActivity::class.java)
-                if (user != null && user.isAdmin == true) {
+                if (user != null && user.isAdmin) {
                     intent.putExtra("isAdmin", true)
                 }
                 else {

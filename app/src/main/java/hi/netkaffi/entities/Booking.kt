@@ -8,6 +8,6 @@ class Booking(
 ) {
     fun getEndTime(): Long {
         //TODO: Implement this method
-        return 0L // Placeholder return value
+        return 0L
     }
 }

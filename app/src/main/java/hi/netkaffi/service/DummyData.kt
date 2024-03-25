@@ -19,14 +19,24 @@ class DummyData {
             return names
         }
 
+        fun getBookingsNamesByUsername(username: String): ArrayList<String> {
+            val names = ArrayList<String>()
+            for (booking in list) {
+                if (booking.user.username == username) {
+                    names.add(booking.product.name + " " + booking.startTime)
+                }
+            }
+            return names
+        }
+
         fun addBooking(booking: Booking) {
             list.add(booking)
         }
 
-        fun getBookingsByUser(user: User): ArrayList<Booking>{
+        fun getBookingsByUsername(username: String): ArrayList<Booking>{
             val userList = ArrayList<Booking>()
             for (booking in list) {
-                if (booking.user == user) {
+                if (booking.user.username == username) {
                     userList.add(booking)
                 }
             }

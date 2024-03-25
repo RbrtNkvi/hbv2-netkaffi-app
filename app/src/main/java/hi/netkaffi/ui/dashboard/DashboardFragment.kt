@@ -29,16 +29,18 @@ class DashboardFragment : Fragment() {
 
         val listView: ListView = binding.bookedList
         val context = requireContext() as MainActivity
-
-        val listData: ArrayList<String> = DummyData.Bookings.getBookingsNames()
         val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(
             context,
             android.R.layout.simple_list_item_1,
-            listData
+            if (false) { //TODO: FIX FOR ADMINS
+                DummyData.Bookings.getBookingsNames()
+            }
+            else { //TODO: FIX FOR USERS
+                DummyData.Bookings.getBookingsNamesByUsername("321")
+            }
         )
         listView.adapter = arrayAdapter
 
-        // Set item click listener to handle item clicks
         listView.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
                 val intent = Intent(context, EditActivity::class.java)
@@ -51,10 +53,13 @@ class DashboardFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        // Reload data from dummyData
-        val listData = DummyData.Bookings.getBookingsNames()
+        val listData = if (false) { //TODO: FIX FOR ADMINS
+            DummyData.Bookings.getBookingsNames()
+        }
+        else { //TODO: FIX FOR USERS
+            DummyData.Bookings.getBookingsNamesByUsername("321")
+        }
 
-        // Update the adapter with the new data
         val arrayAdapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_list_item_1,

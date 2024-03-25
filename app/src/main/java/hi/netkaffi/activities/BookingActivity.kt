@@ -37,7 +37,6 @@ class BookingActivity : AppCompatActivity() {
         picker.maxValue = 23
         picker.minValue = 0
 
-        // Set up the booking button click listener
         binding.bookingButton.setOnClickListener {
             val selectedTime = picker.value.toLong()
             val selectedDate = binding.pickDate.text.toString()

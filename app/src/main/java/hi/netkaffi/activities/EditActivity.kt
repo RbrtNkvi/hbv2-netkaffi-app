@@ -18,30 +18,26 @@ class EditActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        // Retrieve the selected item's data from the intent extras
         val index = intent.getIntExtra("selectedItemIndex", -1)
         val bookings = DummyData.Bookings.getBookings()
         if (index == -1) {
             throw Error("No booking found")
         }
         val booking = bookings[index]
-        // Set the computer name and booking time
+
         binding.productName.text = booking.product.name
         binding.productPrice.text = booking.product.price.toString()
 
-        // Set up the number picker
         binding.picker1.maxValue = 23
         binding.picker1.minValue = 0
         binding.picker1.value = booking.startTime.toInt()
 
         binding.pickDate.text = booking.date
 
-        // Set OnClickListener for the pickDate button
         binding.pickDate.setOnClickListener {
             showDatePickerDialog(binding.pickDate)
         }
 
-        // Set OnClickListener for the edit button
         binding.editButton.setOnClickListener {
             val updatedBooking = Booking(
                 booking.user,
@@ -53,7 +49,6 @@ class EditActivity : AppCompatActivity() {
             finish()
         }
 
-        // Set OnClickListener for the remove button
         binding.removeButton.setOnClickListener {
             DummyData.Bookings.removeBooking(booking)
             finish()

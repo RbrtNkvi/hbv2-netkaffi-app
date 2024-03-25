@@ -17,9 +17,6 @@ import hi.netkaffi.service.DummyData
 class NotificationsFragment : Fragment() {
 
     private var _binding: FragmentNotificationsBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -39,16 +36,26 @@ class NotificationsFragment : Fragment() {
         val listView = binding.productList
         listView.adapter = arrayAdapter
         listView.setOnItemClickListener { _, _, position, _ ->
-            DummyData.Products.removeProduct(position)
-            val intent = Intent(context, MainActivity::class.java)
-            startActivity(intent)
+            if (false) { //TODO: FIX FOR ADMINS
+                DummyData.Products.removeProduct(position)
+                val intent = Intent(context, MainActivity::class.java)
+                startActivity(intent)
+            }
+            else { //TODO: FIX FOR USERS
+
+            }
+        }
+        if (false) { //TODO: FIX FOR ADMINS
+            val button = binding.addProduct
+            button.setOnClickListener { _ ->
+                val intent = Intent(context, NewProductActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        else { //TODO: FIX FOR USERS
+
         }
 
-        val button = binding.addProduct
-        button.setOnClickListener { _ ->
-            val intent = Intent(context, NewProductActivity::class.java)
-            startActivity(intent)
-        }
         return root
     }
 

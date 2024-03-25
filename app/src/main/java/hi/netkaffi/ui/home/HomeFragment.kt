@@ -1,5 +1,6 @@
 package hi.netkaffi.ui.home
 
+import android.R
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,8 +20,6 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -31,24 +30,29 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val listView: ListView = binding.products
-        val arrayAdapter: ArrayAdapter<*>
         if(DummyData.Products.getProducts().isEmpty()){
             DummyData.Products.addProduct(Product("Computer 1", "default", 1500, false))
             DummyData.Products.addProduct(Product("Computer 2", "default", 1500, false))
             DummyData.Products.addProduct(Product("Laptop 1", "default", 1500, false))
         }
 
-        val products = DummyData.Products.getProductsNames()
-        val context = context as MainActivity
-        arrayAdapter = ArrayAdapter(
-            context,
-            android.R.layout.simple_list_item_1 ,products)
-        listView.adapter = arrayAdapter
-        listView.setOnItemClickListener { _, _, position, _ ->
-            val intent = Intent(context, BookingActivity::class.java)
-            intent.putExtra("selectedItemIndex", position)
-            startActivity(intent)
+        val listView: ListView = binding.products
+        if (false) { //TODO: FIX FOR ADMINS
+            listView.visibility = View.GONE
+        } else { //TODO: FIX FOR USERS
+            val arrayAdapter: ArrayAdapter<*>
+
+            val products = DummyData.Products.getProductsNames()
+            val context = context as MainActivity
+            arrayAdapter = ArrayAdapter(
+                context,
+                R.layout.simple_list_item_1 ,products)
+            listView.adapter = arrayAdapter
+            listView.setOnItemClickListener { _, _, position, _ ->
+                val intent = Intent(context, BookingActivity::class.java)
+                intent.putExtra("selectedItemIndex", position)
+                startActivity(intent)
+            }
         }
         return root
     }
