@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.Toast
 import hi.netkaffi.R
 import hi.netkaffi.entities.User
+import hi.netkaffi.service.UserService
 import hi.netkaffi.service.dummyData
 
 class SignupActivity: AppCompatActivity() {
@@ -26,18 +27,16 @@ class SignupActivity: AppCompatActivity() {
         buttonSignup.setOnClickListener{
             val username = findViewById<EditText>(R.id.signup_username).getText().toString()
             val password = findViewById<EditText>(R.id.signup_password).getText().toString()
-
+            Log.i("Username, Password", "$username, $password")
             val user = User(username,password)
-            if(dummyData.Users.isUsername(user)){
-                dummyData.Users.addUsers(user)
-
+            Log.i("User Created", "$user")
+            val userService = UserService()
+            userService.initialize(this)
+            userService.signup(user, callback = {
                 Toast.makeText(this, "Sucess", Toast.LENGTH_LONG).show()
                 val intentLogin = Intent(this, LoginActivity::class.java)
                 startActivity(intentLogin)
-            }
-            val errormsg = "Username already exists"
-            Toast.makeText(this, errormsg, Toast.LENGTH_LONG).show()
-
+            })
 
         }
 
