@@ -14,5 +14,13 @@
         android:layout_weight="1"
         android:gravity="top"
         app:layout_constraintTop_toTopOf="parent" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#888888" />
 
+    <ListView
+        android:id="@+id/favoriteList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

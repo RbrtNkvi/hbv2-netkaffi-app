@@ -23,9 +23,10 @@
         android:textSize="18sp"/>
 
     <Button
-        android:id="@+id/deleteButton"
+        android:id="@+id/bookButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Delete"
+        android:text="Book"
         android:textSize="18sp"/>
+
 </LinearLayout>
