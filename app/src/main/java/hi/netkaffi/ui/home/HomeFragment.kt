@@ -1,14 +1,17 @@
 package hi.netkaffi.ui.home
 
+import ProductAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.ListView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import hi.netkaffi.R
 import hi.netkaffi.activities.BookingActivity
 import hi.netkaffi.activities.MainActivity
 import hi.netkaffi.databinding.FragmentHomeBinding
@@ -36,18 +39,16 @@ class HomeFragment : Fragment() {
         val root: View = binding.root
 
         val listView: ListView = binding.products
-        val arrayAdapter: ArrayAdapter<*>
         val context = context as MainActivity
-
         val productService = ProductService()
         productService.initialize(context)
         productService.fetchProducts(url = "main", callback = ProductCallback {
             val productsDatabase = ((it.filter{ !it.deleted }).map { it.name }).toCollection(ArrayList())
-            val arrayAdapter = ArrayAdapter(
-                context,
-                android.R.layout.simple_list_item_1, productsDatabase
+            val arrayAdapter = ProductAdapter(
+                context, productsDatabase
             )
             listView.adapter = arrayAdapter
+            //held að þetta sé ekki notað
             listView.setOnItemClickListener { adapterView, view, i, l ->
                 val intent = Intent(context, BookingActivity::class.java)
                 intent.putExtra("productName", listView.getItemAtPosition(i) as String)
