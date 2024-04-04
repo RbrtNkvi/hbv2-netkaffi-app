@@ -90,6 +90,8 @@ class BookingActivity : AppCompatActivity() {
             month,
             day
         )
+        //Not in the past
+        datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
 
         datePickerDialog.show()
     }
