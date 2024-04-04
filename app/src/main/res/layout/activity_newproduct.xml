@@ -11,6 +11,18 @@
 
     <!-- Add button -->
 
+    <EditText
+        android:id="@+id/editPrice"
+        android:layout_width="283dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="96dp"
+        android:ems="10"
+        android:hint="Enter price"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/computerNameText" />
+
     <TextView
         android:id="@+id/computerNameText"
         android:layout_width="wrap_content"
@@ -25,7 +37,7 @@
         android:id="@+id/editText"
         android:layout_width="283dp"
         android:layout_height="40dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="28dp"
         android:ems="10"
         android:hint="Enter name"
         android:inputType="text"
@@ -42,5 +54,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editText" />
+        app:layout_constraintTop_toBottomOf="@id/editPrice" />
 </androidx.constraintlayout.widget.ConstraintLayout>

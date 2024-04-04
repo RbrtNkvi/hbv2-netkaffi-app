@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import hi.netkaffi.activities.MainActivity
+import hi.netkaffi.activities.AdminActivity
 import hi.netkaffi.activities.NewProductActivity
 import hi.netkaffi.databinding.FragmentNotificationsBinding
 import hi.netkaffi.entities.Product
@@ -37,7 +37,7 @@ class NotificationsFragment : Fragment() {
 
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        val context = context as MainActivity
+        val context = context as AdminActivity
 
         productService.initialize(context)
         productService.fetchProducts(url = "products", callback = ProductCallback {
@@ -67,7 +67,7 @@ class NotificationsFragment : Fragment() {
 
     fun deleteProduct(name: String, product: Product){
         productService.deleteProduct(url = name, product = product, callback = {
-            val intent = Intent(context, MainActivity::class.java)
+            val intent = Intent(context, AdminActivity::class.java)
             startActivity(intent)
         })
     }

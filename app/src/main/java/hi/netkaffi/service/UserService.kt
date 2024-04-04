@@ -26,6 +26,18 @@ class UserService {
     var context: Context? = null
     var apiRequestQueue: RequestQueue? = null
 
+    object ActiveUser {
+        private var user: User? = null
+
+        fun setUser(user: User){
+            this.user = user
+        }
+
+        fun isAdmin(): Boolean?{
+            return user?.isAdmin
+        }
+    }
+
     fun initialize(context: Context){
         this.context = context
         this.apiRequestQueue = Volley.newRequestQueue(context)

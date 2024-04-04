@@ -10,8 +10,10 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.fragment.app.Fragment
 import hi.netkaffi.activities.EditActivity
-import hi.netkaffi.activities.MainActivity
+import hi.netkaffi.activities.AdminActivity
+import hi.netkaffi.activities.UserActivity
 import hi.netkaffi.databinding.FragmentDashboardBinding
+import hi.netkaffi.service.UserService
 import hi.netkaffi.service.dummyData
 
 class DashboardFragment : Fragment() {
@@ -28,7 +30,7 @@ class DashboardFragment : Fragment() {
         val root: View = binding.root
 
         val listView: ListView = binding.bookedList
-        val context = requireContext() as MainActivity
+        val context = if(UserService.ActiveUser.isAdmin() == true) context as AdminActivity else context as UserActivity
 
         val listData: ArrayList<String> = dummyData.bookings.getBookingsNames()
         val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(

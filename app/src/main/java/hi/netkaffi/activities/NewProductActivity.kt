@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import hi.netkaffi.databinding.ActivityNewproductBinding
 import hi.netkaffi.entities.Product
 import hi.netkaffi.service.ProductService
-import hi.netkaffi.service.dummyData
 
 class NewProductActivity: AppCompatActivity() {
     private var _binding: ActivityNewproductBinding? = null
@@ -21,7 +20,8 @@ class NewProductActivity: AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         val button = binding.productAdd
-        val text = binding.editText
+        val productName = binding.editText
+        val productPrice = binding.editPrice
 
         val productService = ProductService()
         productService.initialize(this)
@@ -29,9 +29,9 @@ class NewProductActivity: AppCompatActivity() {
 
         button.setOnClickListener { view ->
 
-            val product = Product(text.text.toString(), "default", 1500, false, arrayOf(), arrayOf())
+            val product = Product(productName.text.toString(), "default", productPrice.text.toString().toInt(), false, arrayOf(), arrayOf())
             productService.addProduct(product, callback = {
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, AdminActivity::class.java)
                 startActivity(intent)
             })
         }

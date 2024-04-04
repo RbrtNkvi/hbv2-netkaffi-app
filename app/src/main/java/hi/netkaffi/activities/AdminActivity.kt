@@ -11,7 +11,7 @@ import hi.netkaffi.R
 import hi.netkaffi.databinding.ActivityLoginBinding
 import hi.netkaffi.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class AdminActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private  lateinit var  binding2: ActivityLoginBinding
