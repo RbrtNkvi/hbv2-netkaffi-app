@@ -4,13 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import hi.netkaffi.R
 import hi.netkaffi.entities.User
 import hi.netkaffi.service.UserService
 import hi.netkaffi.service.api.UserCallback
-import hi.netkaffi.service.dummyData
 
 class LoginActivity : AppCompatActivity() {
 
@@ -40,8 +38,15 @@ class LoginActivity : AppCompatActivity() {
             val user = User(username,password)
 
             userService.login(user, callback = UserCallback {
-                val intentMain = Intent(this, MainActivity::class.java)
-                startActivity(intentMain)
+                UserService.ActiveUser.setUser(it[0])
+                if( it[0].isAdmin == true ){
+                    val intentAdmin = Intent(this, AdminActivity::class.java)
+                    startActivity(intentAdmin)
+                } else {
+                    val intentMain = Intent(this, UserActivity::class.java)
+                    intentMain.putExtra("user", username)
+                    startActivity(intentMain)
+                }
             })
 
         }

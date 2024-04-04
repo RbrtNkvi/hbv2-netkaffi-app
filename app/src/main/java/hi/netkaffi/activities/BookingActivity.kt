@@ -11,9 +11,9 @@ import hi.netkaffi.databinding.ActivityBookingBinding
 import hi.netkaffi.entities.Booking
 import hi.netkaffi.entities.User
 import hi.netkaffi.service.ProductService
+import hi.netkaffi.service.UserService
 import hi.netkaffi.service.dummyData
 import java.util.Calendar
-import android.content.Context
 
 class BookingActivity : AppCompatActivity() {
 
@@ -63,7 +63,7 @@ class BookingActivity : AppCompatActivity() {
                     dummyData.bookings.addBooking(booking)
                 }
 
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, if(UserService.ActiveUser.isAdmin() == true) AdminActivity::class.java else UserActivity::class.java)
                 startActivity(intent)
             }
 
