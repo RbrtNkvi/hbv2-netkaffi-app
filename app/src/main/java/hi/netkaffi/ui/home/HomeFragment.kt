@@ -17,7 +17,7 @@ import hi.netkaffi.databinding.FragmentHomeBinding
 import hi.netkaffi.service.ProductService
 import hi.netkaffi.service.UserService
 import hi.netkaffi.service.api.ProductCallback
-
+//import hi.netkaffi.adapters.ProductAdapter
 
 class HomeFragment : Fragment() {
 
@@ -46,7 +46,9 @@ class HomeFragment : Fragment() {
         productService.fetchProducts(url = "main", callback = ProductCallback {
             val productsDatabase = ((it.filter{ !it.deleted }).map { it.name }).toCollection(ArrayList())
             val arrayAdapter = ProductAdapter(
-                context, productsDatabase
+                context,
+                productsDatabase,
+                HashSet<String>() // Pass an empty HashSet if favoriteComputers is not available
             )
             listView.adapter = arrayAdapter
             //held að þetta sé ekki notað

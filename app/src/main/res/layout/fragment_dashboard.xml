@@ -18,9 +18,17 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#888888" />
-
+    <TextView
+        android:id="@+id/favoriteComputersText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My favorite computers:"
+        android:textSize="18sp"
+        android:padding="8dp"
+        android:gravity="center_vertical" />
     <ListView
         android:id="@+id/favoriteList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="315dp"
+        android:gravity="top" />
 </LinearLayout>

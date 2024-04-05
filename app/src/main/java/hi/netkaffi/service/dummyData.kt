@@ -7,6 +7,8 @@ class dummyData {
 
     object bookings{
         private val list = ArrayList<Booking>()
+        private val favoriteComputers = HashSet<String>() // Set to store favorite computers
+
         fun getBookings(): ArrayList<Booking> {
             return list
         }
@@ -25,6 +27,7 @@ class dummyData {
 
         fun getBookingsByUser(user: User): ArrayList<Booking>{
             val userlist = ArrayList<Booking>()
+
             for (booking in list) {
                 if (booking.user == user) {
                     userlist.add(booking)
@@ -50,6 +53,23 @@ class dummyData {
 
         fun removeBooking(booking: Booking) {
             list.remove(booking)
+        }
+        // Function to mark a computer as favorite
+        fun addToFavorites(computerName: String) {
+            favoriteComputers.add(computerName)
+        }
+        fun removeFromFavorites(computerName: String) {
+            favoriteComputers.remove(computerName)
+        }
+
+        // Function to check if a computer is marked as favorite
+        fun isFavorite(computerName: String): Boolean {
+            return favoriteComputers.contains(computerName)
+        }
+
+        // Function to get names of favorite computers
+        fun getFavoriteComputersNames(): ArrayList<String> {
+            return ArrayList(favoriteComputers)
         }
     }
 
