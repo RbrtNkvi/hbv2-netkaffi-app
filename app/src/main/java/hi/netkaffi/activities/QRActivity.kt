@@ -34,5 +34,63 @@ class QRActivity: AppCompatActivity(){
         binding = ActivityQrTestBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+        val scannerView = findViewById<CodeScannerView>(R.id.qrScannerView)
+        qrScanner = CodeScanner(this, scannerView)
+        qrScanner.camera = CodeScanner.CAMERA_BACK
+        qrScanner.formats = CodeScanner.ALL_FORMATS
+        qrScanner.autoFocusMode = AutoFocusMode.SAFE
+        qrScanner.scanMode = ScanMode.SINGLE
+        qrScanner.isAutoFocusEnabled =true
+        qrScanner.isFlashEnabled = false
+
+        // Callbacks
+        qrScanner.decodeCallback = DecodeCallback {
+            runOnUiThread {
+                Toast.makeText(this, "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
+            }
+        }
+        qrScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
+            runOnUiThread {
+                Toast.makeText(this, "Camera initialization error: ${it.message}",
+                    Toast.LENGTH_LONG).show()
+            }
+        }
+
+        scannerView.setOnClickListener {
+            qrScanner.startPreview()
+        }
     }
+    fun checkPermission(){
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA),cameraPermission)
+        }
+        else{
+            qrScanner.startPreview()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode == cameraPermission&&grantResults.isNotEmpty()&&grantResults[0]==PackageManager.PERMISSION_GRANTED){
+            qrScanner.startPreview()
+        }else{
+            Toast.makeText(this, "Need camera permission to be able to scan code",Toast.LENGTH_LONG).show()
+        }
+    }
+    override fun onResume() {
+        super.onResume()
+        qrScanner.startPreview()
+    }
+
+    override fun onPause() {
+        qrScanner.releaseResources()
+        super.onPause()
+    }
+
 }
+
