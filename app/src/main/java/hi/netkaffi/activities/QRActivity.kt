@@ -47,6 +47,10 @@ class QRActivity: AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Toast.makeText(this,"Im going back", Toast.LENGTH_LONG).show()
+    }
     private fun startScanning() {
         val scannerView: CodeScannerView = findViewById(R.id.qrScannerView)
         qrScanner = CodeScanner(this, scannerView)

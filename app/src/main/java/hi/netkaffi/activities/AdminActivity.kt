@@ -29,7 +29,6 @@ class AdminActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.qrButtonMain.setOnClickListener{
-            Toast.makeText(this, "Tester", Toast.LENGTH_LONG).show()
             val binding2 = ActivityQrBinding.inflate(layoutInflater)
             val view = binding2.root
             setContentView(view)
@@ -55,6 +54,9 @@ class AdminActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+    override fun onBackPressed() {
+        setContentView(binding.root)
     }
 }
 

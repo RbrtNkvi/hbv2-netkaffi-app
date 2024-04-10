@@ -33,4 +33,7 @@ class UserActivity: AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+    override fun onBackPressed() {
+        setContentView(binding.root)
+    }
 }
