@@ -12,10 +12,10 @@ import hi.netkaffi.service.api.UserCallback
 
 class LoginActivity : AppCompatActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        setTitle(R.string.login_button);
 
         val buttonSignup = findViewById<Button>(R.id.signup_button);
         buttonSignup.setOnClickListener{
@@ -23,8 +23,6 @@ class LoginActivity : AppCompatActivity() {
             val intentSignup = Intent(this, SignupActivity::class.java)
             startActivity(intentSignup)
         }
-        //val tempuser = User("123","123", true)
-        //dummyData.Users.addUsers(tempuser)
 
         val userService = UserService()
         userService.initialize(this)

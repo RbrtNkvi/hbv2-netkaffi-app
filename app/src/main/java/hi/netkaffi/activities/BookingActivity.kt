@@ -19,6 +19,7 @@ class BookingActivity : AppCompatActivity() {
 
     private var _binding: ActivityBookingBinding? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityBookingBinding.inflate(layoutInflater)

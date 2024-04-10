@@ -1,6 +1,10 @@
 package hi.netkaffi.activities
 
+import android.content.Intent
+import android.media.Image
 import android.os.Bundle
+import android.widget.ImageButton
+import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -8,19 +12,32 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import hi.netkaffi.R
+import hi.netkaffi.databinding.ActivityBookingBinding
 import hi.netkaffi.databinding.ActivityLoginBinding
 import hi.netkaffi.databinding.ActivityMainBinding
+import hi.netkaffi.databinding.ActivityQrBinding
 
 class AdminActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private  lateinit var  binding2: ActivityLoginBinding
+    private lateinit var binding2: ActivityQrBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.qrButtonMain.setOnClickListener{
+            val binding2 = ActivityQrBinding.inflate(layoutInflater)
+            val view = binding2.root
+            setContentView(view)
+
+            binding2.scanButton.setOnClickListener{
+                val intentQr = Intent(this, QRActivity::class.java)
+                startActivity(intentQr)
+            }
+        }
 
         //binding2 = ActivityLoginBinding.inflate(layoutInflater)
         //setContentView(R.layout.activity_login)
@@ -37,6 +54,9 @@ class AdminActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+    override fun onBackPressed() {
+        setContentView(binding.root)
     }
 }
 
