@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import hi.netkaffi.R
 import hi.netkaffi.databinding.ActivityBookingBinding
+import hi.netkaffi.databinding.ActivityQrTestBinding
 import hi.netkaffi.entities.Booking
 import hi.netkaffi.entities.User
 import hi.netkaffi.service.ProductService
@@ -18,6 +19,7 @@ import java.util.Calendar
 class BookingActivity : AppCompatActivity() {
 
     private var _binding: ActivityBookingBinding? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

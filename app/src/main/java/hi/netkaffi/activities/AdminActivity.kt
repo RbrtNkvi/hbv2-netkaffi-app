@@ -1,6 +1,10 @@
 package hi.netkaffi.activities
 
+import android.content.Intent
+import android.media.Image
 import android.os.Bundle
+import android.widget.ImageButton
+import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -14,13 +18,18 @@ import hi.netkaffi.databinding.ActivityMainBinding
 class AdminActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private  lateinit var  binding2: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.qrButtonMain.setOnClickListener{
+            Toast.makeText(this, "Tester", Toast.LENGTH_LONG).show()
+            val intentQr = Intent(this, QRActivity::class.java)
+            startActivity(intentQr)
+        }
 
         //binding2 = ActivityLoginBinding.inflate(layoutInflater)
         //setContentView(R.layout.activity_login)
