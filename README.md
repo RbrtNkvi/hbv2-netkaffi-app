@@ -31,6 +31,6 @@
 
 
 
-##### Dummy temp account
+#### Admin aðgangur:
 -  Username: 123
 -  Password: 123
