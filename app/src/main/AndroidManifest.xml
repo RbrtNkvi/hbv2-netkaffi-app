@@ -18,6 +18,8 @@
         android:roundIcon="@drawable/logotealnobanner"
         android:supportsRtl="true"
         android:theme="@style/Theme.Netkaffi"
+        android:autoLink="web"
+        android:linksClickable="true"
         tools:targetApi="31">
         <activity
             android:name=".activities.SignupActivity"
