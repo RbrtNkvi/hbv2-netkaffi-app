@@ -21,7 +21,7 @@
 - [x] `favorite` - notandi getur "favorite-að" tölvu og hún þá birst á öðrum favorite-lista
 - [ ] `admin-edit/delete` - admin getur breytt og eytt bókunum, notendum og tölvum
 - [x] `QR` - notandi getur skannað qr kóða og þannig bókað
-- [ ] `notifications` - notandi fær áminningu þegar 10 mínútur eru í að tíminn hans byrji
+- [ ] `notifications` - notandi fær áminningu þegar bókun tekst
       
 #### Ef tími gefst:
 
