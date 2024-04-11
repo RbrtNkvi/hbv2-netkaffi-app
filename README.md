@@ -18,9 +18,12 @@
 - [x] `edit` - notandi getur breytt sinni bókun
 - [x] `computers` - admin getur skoðað og breytt lista yfir tölvur sem má leigja út
 - [x] `bakendi` - tenging við gagnagrunn
-- [ ] `favorite` - notandi getur "favorite-að" tölvu og hún þá birst á öðrum favorite-lista
+- [x] `favorite` - notandi getur "favorite-að" tölvu og hún þá birst á öðrum favorite-lista
 - [ ] `admin-edit/delete` - admin getur breytt og eytt bókunum, notendum og tölvum
-- [ ] `QR` - notandi getur skannað qr kóða og þannig bókað
+- [x] `QR` - notandi getur skannað qr kóða og þannig bókað
+- [ ] `notifications` - notandi fær áminningu þegar 10 mínútur eru í að tíminn hans byrji
+- [ ] `hamborgara-menu` - notandi getur séð hver er loggaður inn sem og hvort hann sé admin
+
 
 
 ##### Dummy temp account
