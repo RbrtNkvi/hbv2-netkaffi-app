@@ -22,6 +22,11 @@
 - [ ] `admin-edit/delete` - admin getur breytt og eytt bókunum, notendum og tölvum
 - [x] `QR` - notandi getur skannað qr kóða og þannig bókað
 - [ ] `notifications` - notandi fær áminningu þegar 10 mínútur eru í að tíminn hans byrji
+      
+#### Ef tími gefst:
+
+<!-- checkbox to mark when complete -->
+
 - [ ] `hamborgara-menu` - notandi getur séð hver er loggaður inn sem og hvort hann sé admin
 
 
