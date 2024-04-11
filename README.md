@@ -22,6 +22,7 @@
 - [ ] `admin-edit/delete` - admin getur breytt og eytt bókunum, notendum og tölvum
 - [x] `QR` - notandi getur skannað qr kóða og þannig bókað
 - [ ] `notifications` - notandi fær áminningu þegar bókun tekst
+- [ ] `logout og favorite` - á oðrum glugga birtast uppáhalds tölvur og logout takki 
       
 #### Ef tími gefst:
 
@@ -32,5 +33,6 @@
 
 
 #### Admin aðgangur:
--  Username: 123
--  Password: 123
+-  Username: admin
+-  Password: password
+  
