@@ -69,6 +69,7 @@ class QRActivity: AppCompatActivity() {
                 textView.movementMethod = LinkMovementMethod.getInstance()
                 textView.text = Html.fromHtml("${it.text}")
 
+
             }
         }
         qrScanner.errorCallback = ErrorCallback {
