@@ -8,9 +8,12 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.PersistableBundle
+import android.text.Html
+import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
@@ -28,7 +31,6 @@ class QRActivity: AppCompatActivity() {
     private lateinit var binding: ActivityQrCameraBinding
 
     private lateinit var qrScanner: CodeScanner
-    private val cameraPermission = 1111
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -62,7 +64,12 @@ class QRActivity: AppCompatActivity() {
         qrScanner.isFlashEnabled = false
         qrScanner.decodeCallback = DecodeCallback {
             runOnUiThread {
-                Toast.makeText(this, "Scan Results: ${it.text}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "${it.text}", Toast.LENGTH_SHORT).show()
+                val textView: TextView = findViewById(R.id.qrResults)
+                textView.movementMethod = LinkMovementMethod.getInstance()
+                textView.text = Html.fromHtml("${it.text}")
+
+
             }
         }
         qrScanner.errorCallback = ErrorCallback {
