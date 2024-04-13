@@ -7,7 +7,7 @@
 
 - Ásgeir Snær Magnússon (asm34@hi.is)
 - Ólafur Ingi Kárason (oik69@hi.is)
-- Róbert Nökkvi Gunarsson (RbrtNkvi@hi.is)
+- Róbert Nökkvi Gunarsson (rng1@hi.is)
 - Vigdís Erla Sigmundsdóttir (ves14@hi.is)
 
 
