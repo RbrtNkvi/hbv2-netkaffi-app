@@ -14,6 +14,7 @@ import hi.netkaffi.activities.BookingActivity
 import hi.netkaffi.activities.AdminActivity
 import hi.netkaffi.activities.UserActivity
 import hi.netkaffi.databinding.FragmentHomeBinding
+import hi.netkaffi.service.FavouriteService
 import hi.netkaffi.service.ProductService
 import hi.netkaffi.service.UserService
 import hi.netkaffi.service.api.ProductCallback
@@ -39,25 +40,34 @@ class HomeFragment : Fragment() {
         val root: View = binding.root
 
         val listView: ListView = binding.products
-        Log.i("Active User", "${UserService.ActiveUser.isAdmin()}")
-        val context = if( UserService.ActiveUser.isAdmin() == true ) context as AdminActivity else context as UserActivity
-        val productService = ProductService()
-        productService.initialize(context)
-        productService.fetchProducts(url = "main", callback = ProductCallback {
-            val productsDatabase = ((it.filter{ !it.deleted }).map { it.name }).toCollection(ArrayList())
-            val arrayAdapter = ProductAdapter(
-                context,
-                productsDatabase,
-                HashSet<String>() // Pass an empty HashSet if favoriteComputers is not available
-            )
-            listView.adapter = arrayAdapter
-            //held að þetta sé ekki notað
-            listView.setOnItemClickListener { adapterView, view, i, l ->
-                val intent = Intent(context, BookingActivity::class.java)
-                intent.putExtra("productName", listView.getItemAtPosition(i) as String)
-                startActivity(intent)
-            }
-        })
+        val user = UserService.ActiveUser.getUser()
+        if(user != null) {
+            val context =
+                if (user.isAdmin == true) context as AdminActivity else context as UserActivity
+            val productService = ProductService()
+            productService.initialize(context)
+            val favouriteService = FavouriteService()
+            favouriteService.initialize(context)
+            favouriteService.fetchFavourites(user.username, callback = {favs ->
+                val favourites = favs.map{f -> f.productName}.toCollection(ArrayList())
+                productService.fetchProducts(url = "main", callback = ProductCallback {
+                    val productsDatabase =
+                        ((it.filter { !it.deleted }).map { it.name }).toCollection(ArrayList())
+                    val arrayAdapter = ProductAdapter(
+                        context,
+                        productsDatabase,
+                        favourites // Pass an empty HashSet if favoriteComputers is not available
+                    )
+                    listView.adapter = arrayAdapter
+                    //held að þetta sé ekki notað
+                    listView.setOnItemClickListener { adapterView, view, i, l ->
+                        val intent = Intent(context, BookingActivity::class.java)
+                        intent.putExtra("productName", listView.getItemAtPosition(i) as String)
+                        startActivity(intent)
+                    }
+                })
+            })
+        }
         return root
     }
 

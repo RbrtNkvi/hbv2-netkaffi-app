@@ -16,7 +16,7 @@ class dummyData {
         fun getBookingsNames(): ArrayList<String> {
             val names = ArrayList<String>()
             for (booking in list) {
-                names.add(booking.product.name + " " + booking.startTime)
+                names.add(booking.product.name + " " + booking.starttime)
             }
             return names
         }
@@ -38,7 +38,7 @@ class dummyData {
 
         fun getBooking(user: User, product: Product, date: String, startTime: Long): Booking? {
             for (booking in list) {
-                if (booking.user == user && booking.product == product && booking.date == date && booking.startTime == startTime) {
+                if (booking.user == user && booking.product == product && booking.starttime == startTime) {
                     return booking
                 }
             }

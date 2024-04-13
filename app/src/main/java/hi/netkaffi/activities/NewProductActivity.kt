@@ -29,7 +29,7 @@ class NewProductActivity: AppCompatActivity() {
 
         button.setOnClickListener { view ->
 
-            val product = Product(productName.text.toString(), "default", productPrice.text.toString().toInt(), false, arrayOf(), arrayOf())
+            val product = Product(productName.text.toString(), "default", productPrice.text.toString().toInt(), false)
             productService.addProduct(product, callback = {
                 val intent = Intent(this, AdminActivity::class.java)
                 startActivity(intent)

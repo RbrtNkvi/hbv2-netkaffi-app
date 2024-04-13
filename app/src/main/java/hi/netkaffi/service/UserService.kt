@@ -33,6 +33,10 @@ class UserService {
             this.user = user
         }
 
+        fun getUser(): User?{
+            return this.user
+        }
+
         fun isAdmin(): Boolean?{
             return user?.isAdmin
         }

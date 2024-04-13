@@ -53,7 +53,6 @@ class EditActivity : AppCompatActivity() {
                     booking.user,
                     booking.product,
                     binding.picker1.value.toLong(),
-                    binding.pickDate.text.toString() // Update with the selected date
                 )
                 dummyData.bookings.updateBooking(index, updatedBookingObject)
             }

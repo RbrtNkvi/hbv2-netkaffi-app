@@ -10,4 +10,9 @@
         android:icon="@drawable/ic_dashboard_black_24dp"
         android:title="@string/title_dashboard" />
 
+    <item
+        android:id="@+id/userFragment"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/title_user" />
+
 </menu>

@@ -2,17 +2,21 @@ package hi.netkaffi.ui.dashboard
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import hi.netkaffi.activities.EditActivity
 import hi.netkaffi.activities.AdminActivity
 import hi.netkaffi.activities.UserActivity
 import hi.netkaffi.databinding.FragmentDashboardBinding
+import hi.netkaffi.entities.Booking
+import hi.netkaffi.service.BookingService
 import hi.netkaffi.service.UserService
 import hi.netkaffi.service.dummyData
 
@@ -30,49 +34,33 @@ class DashboardFragment : Fragment() {
         val root: View = binding.root
 
         val listView: ListView = binding.bookedList
-        val favoriteListView: ListView = binding.favoriteList
         val context = if(UserService.ActiveUser.isAdmin() == true) context as AdminActivity else context as UserActivity
 
-        // Retrieve the list of bookings and favorite computers from dummyData
-        val bookingsList: ArrayList<String> = dummyData.bookings.getBookingsNames()
-        val favoriteComputersList: ArrayList<String> = dummyData.bookings.getFavoriteComputersNames()
+        val bookingService = BookingService()
+        bookingService.initialize(context)
 
-        // Create an ArrayAdapter for the bookings list
-        val bookingsAdapter: ArrayAdapter<String> = ArrayAdapter(
-            context,
-            android.R.layout.simple_list_item_1,
-            bookingsList
-        )
+        val user = UserService.ActiveUser.getUser()
+        if(user != null) {
+            bookingService.fetchBookings(user.username,
+                callback = {
+                    val bookings = it.map{booking->booking.toStringFormat()}.toCollection(ArrayList())
+                    val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(
+                        context,
+                        android.R.layout.simple_list_item_1,
+                        bookings
+                    )
+                    listView.adapter = arrayAdapter
 
-        // Create an ArrayAdapter for the favorite computers list
-        val favoriteComputersAdapter: ArrayAdapter<String> = ArrayAdapter(
-            context,
-            android.R.layout.simple_list_item_1,
-            favoriteComputersList
-        )
-
-        // Set the adapters to the ListViews
-        listView.adapter = bookingsAdapter
-        favoriteListView.adapter = favoriteComputersAdapter
-
-        // Set item click listener for the bookings ListView to handle item clicks
-        listView.onItemClickListener =
-            AdapterView.OnItemClickListener { parent, view, position, id ->
-                val selectedItem = parent.getItemAtPosition(position) as String
-                // Assuming you have an EditActivity to edit the selected item
-                val intent = Intent(context, EditActivity::class.java)
-                // Pass appropriate data to the EditActivity based on the selected item
-                startActivity(intent)
-            }
-
-        // Set item click listener for the favorite computers ListView
-        favoriteListView.onItemClickListener =
-            AdapterView.OnItemClickListener { parent, view, position, id ->
-                val selectedItem = parent.getItemAtPosition(position) as String
-                // Handle item clicks for the favorite computers list
-                // For example, you can open a detailed view or perform other actions
-                // based on the selected favorite computer
-            }
+                    listView.onItemClickListener =
+                        AdapterView.OnItemClickListener { parent, view, position, id ->
+                            val booking = it[position]
+                            bookingService.deleteBooking(booking, callback = {
+                                arrayAdapter.remove(arrayAdapter.getItem(position))
+                                arrayAdapter.notifyDataSetChanged()
+                            })
+                        }
+                })
+        }
 
         return root
     }
@@ -81,15 +69,19 @@ class DashboardFragment : Fragment() {
         super.onResume()
 
         // Reload data from dummyData
-        val bookingsList = dummyData.bookings.getBookingsNames()
-        val favoriteComputersList = dummyData.bookings.getFavoriteComputersNames()
+        val listData = dummyData.bookings.getBookingsNames()
 
-        // Update the adapters with the new data
-        (binding.bookedList.adapter as ArrayAdapter<String>).clear()
-        (binding.bookedList.adapter as ArrayAdapter<String>).addAll(bookingsList)
-        (binding.favoriteList.adapter as ArrayAdapter<String>).clear()
-        (binding.favoriteList.adapter as ArrayAdapter<String>).addAll(favoriteComputersList)
+        // Update the adapter with the new data
+        val arrayAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_list_item_1,
+            listData
+        )
+
+        // Set the adapter to the ListView
+        binding.bookedList.adapter = arrayAdapter
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -8,11 +8,13 @@ import android.widget.Button
 import android.widget.TextView
 import hi.netkaffi.R
 import hi.netkaffi.activities.BookingActivity
+import hi.netkaffi.entities.Favourite
+import hi.netkaffi.service.FavouriteService
+import hi.netkaffi.service.UserService
 import hi.netkaffi.service.dummyData
 
-class ProductAdapter(context: Context, private val products: ArrayList<String>, private val favoriteComputers: HashSet<String>) :
+class ProductAdapter(context: Context, private val products: ArrayList<String>, private val favouriteComputers: ArrayList<String>) :
     ArrayAdapter<String>(context, R.layout.item_product, products) {
-
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var itemView = convertView
         if (itemView == null) {
@@ -28,7 +30,7 @@ class ProductAdapter(context: Context, private val products: ArrayList<String>, 
         productNameTextView.text = product
 
         // Set favorite icon based on whether the product is favorited
-        if (dummyData.bookings.isFavorite(product)) {
+        if (favouriteComputers.contains(product)) {
             heartButton.isSelected = true
             heartButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_favorite_filled, 0, 0, 0)
         } else {
@@ -36,18 +38,27 @@ class ProductAdapter(context: Context, private val products: ArrayList<String>, 
             heartButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_favorite_border, 0, 0, 0)
         }
 
+        val favouriteService = FavouriteService()
+        favouriteService.initialize(context)
+        val user = UserService.ActiveUser.getUser()
         // Set click listener for the heartButton
         heartButton.setOnClickListener {
-            if (dummyData.bookings.isFavorite(product)) {
+            if (favouriteComputers.contains(product)) {
                 // Product is already favorited, deselect it
-                dummyData.bookings.removeFromFavorites(product)
-                heartButton.isSelected = false
-                heartButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_favorite_border, 0, 0, 0)
+                if(user != null) {
+                    favouriteService.deleteFavourite(Favourite(user.username,product), callback = {
+                        heartButton.isSelected = false
+                        heartButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_favorite_border, 0, 0, 0)
+                    })
+                }
             } else {
                 // Product is not favorited, select it
-                dummyData.bookings.addToFavorites(product)
-                heartButton.isSelected = true
-                heartButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_favorite_filled, 0, 0, 0)
+                if(user != null) {
+                    favouriteService.addFavourite(user.username,product,callback={
+                        heartButton.isSelected = true
+                        heartButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_favorite_filled, 0, 0, 0)
+                    })
+                }
             }
         }
 

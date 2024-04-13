@@ -3,17 +3,27 @@ package hi.netkaffi.activities
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.NumberPicker
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.gson.Gson
 import hi.netkaffi.R
 import hi.netkaffi.databinding.ActivityBookingBinding
 import hi.netkaffi.entities.Booking
 import hi.netkaffi.entities.User
+import hi.netkaffi.service.BookingService
 import hi.netkaffi.service.ProductService
 import hi.netkaffi.service.UserService
 import hi.netkaffi.service.dummyData
+import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
+import java.util.Locale
 
 class BookingActivity : AppCompatActivity() {
 
@@ -49,23 +59,37 @@ class BookingActivity : AppCompatActivity() {
 
             // Set up the booking button click listener
             binding.bookingButton.setOnClickListener {
-                val selectedTime = picker.value.toLong()
+                val selectedTime = picker.value.toLong()*3600
                 val selectedDate = binding.pickDate.text.toString()
+                val date = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(selectedDate)?.time
+                val unix = date?.plus(selectedTime)
+                Log.i("Date Created", "$date")
+                Log.i("Unix timestamp", "$unix")
 
-                val user = User("example_user_id", "John Doe")
+                val user = UserService.ActiveUser.getUser()
 
-                val booking = if (product != null) {
-                    Booking(user, product, selectedTime, selectedDate) // Store the booking date in the 'date' field
+                val booking = if (user != null && unix != null) {
+                    Booking(
+                        user,
+                        product,
+                        unix,
+                    ) // Store the booking date in the 'date' field
                 } else {
                     null
                 }
-
                 if (booking != null) {
-                    dummyData.bookings.addBooking(booking)
+                    Log.i("Booking Object", booking.toStringFormat())
+                    Log.i("Booking Json", "${JSONObject(Gson().toJson(booking))}")
                 }
-
-                val intent = Intent(this, if(UserService.ActiveUser.isAdmin() == true) AdminActivity::class.java else UserActivity::class.java)
-                startActivity(intent)
+                if (booking != null) {
+                    val bookingService = BookingService()
+                    bookingService.initialize(context)
+                    bookingService.addBooking(booking,
+                        callback = {
+                            val intent = Intent(this, if(UserService.ActiveUser.isAdmin() == true) AdminActivity::class.java else UserActivity::class.java)
+                            startActivity(intent)
+                        })
+                }
             }
 
             // Set up the pickDate button click listener
