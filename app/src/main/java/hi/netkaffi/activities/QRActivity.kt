@@ -65,10 +65,13 @@ class QRActivity: AppCompatActivity() {
         qrScanner.decodeCallback = DecodeCallback {
             runOnUiThread {
                 Toast.makeText(this, "${it.text}", Toast.LENGTH_SHORT).show()
-                val textView: TextView = findViewById(R.id.qrResults)
-                textView.movementMethod = LinkMovementMethod.getInstance()
-                textView.text = Html.fromHtml("${it.text}")
+                //val textView: TextView = findViewById(R.id.qrResults)
+                //textView.movementMethod = LinkMovementMethod.getInstance()
+                //textView.text = Html.fromHtml("${it.text}")
 
+                val intentBooking= Intent(this, BookingActivity::class.java)
+                intentBooking.putExtra("product","${it.text}")
+                startActivity(intentBooking)
 
             }
         }
