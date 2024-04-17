@@ -1,12 +1,22 @@
 package hi.netkaffi.activities
 
+import android.Manifest
 import android.app.DatePickerDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.NumberPicker
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.google.gson.Gson
 import hi.netkaffi.R
 import hi.netkaffi.databinding.ActivityBookingBinding
@@ -28,6 +38,10 @@ import java.util.Locale
 class BookingActivity : AppCompatActivity() {
 
     private var _binding: ActivityBookingBinding? = null
+
+    private var Channel_ID = "channelID"
+    private var Channel_NAME = "channelName"
+    private var Notification_ID = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,6 +98,21 @@ class BookingActivity : AppCompatActivity() {
                 if (booking != null) {
                     val bookingService = BookingService()
                     bookingService.initialize(context)
+                    createNotificationChannel()
+                    val notification = NotificationCompat.Builder(this, Channel_ID)
+                        .setSmallIcon(R.drawable.logotealnobanner)
+                        .setContentTitle("SUCCESS")
+                        .setContentText("You've made a booking")
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .build()
+                    val notificationManager = NotificationManagerCompat.from(this)
+                    if (ActivityCompat.checkSelfPermission(
+                            this,
+                            Manifest.permission.POST_NOTIFICATIONS
+                        ) != PackageManager.PERMISSION_GRANTED
+                    )
+                        else notificationManager.notify(Notification_ID, notification)
+
                     bookingService.addBooking(booking,
                         callback = {
                             val intent = Intent(this, if(UserService.ActiveUser.isAdmin() == true) AdminActivity::class.java else UserActivity::class.java)
@@ -97,6 +126,17 @@ class BookingActivity : AppCompatActivity() {
                 showDatePickerDialog(binding.pickDate)
             }
         })
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(Channel_ID, Channel_NAME, NotificationManager.IMPORTANCE_HIGH).apply {
+                lightColor = Color.GREEN
+                enableLights(true)
+            }
+            val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            manager.createNotificationChannel(channel)
+        }
     }
 
     private fun showDatePickerDialog(dateTextView: TextView) {
@@ -115,7 +155,6 @@ class BookingActivity : AppCompatActivity() {
             month,
             day
         )
-        //Not in the past
         datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
 
         datePickerDialog.show()
