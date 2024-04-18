@@ -10,14 +10,13 @@ import android.widget.Toast
 import hi.netkaffi.R
 import hi.netkaffi.entities.User
 import hi.netkaffi.service.UserService
-import hi.netkaffi.service.dummyData
 
 class SignupActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
-        val button = findViewById<Button>(R.id.back_login_button);
+        val button = findViewById<Button>(R.id.back_login_button)
         button.setOnClickListener{
 
             val intentLogin = Intent(this, LoginActivity::class.java)
@@ -33,7 +32,7 @@ class SignupActivity: AppCompatActivity() {
             val userService = UserService()
             userService.initialize(this)
             userService.signup(user, callback = {
-                Toast.makeText(this, "Sucess", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Success", Toast.LENGTH_LONG).show()
                 val intentLogin = Intent(this, LoginActivity::class.java)
                 startActivity(intentLogin)
             })

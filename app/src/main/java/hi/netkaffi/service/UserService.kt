@@ -1,30 +1,22 @@
 package hi.netkaffi.service
 
-import android.app.Service
 import android.content.Context
-import android.content.Intent
-import android.os.Bundle
-import android.os.IBinder
 import android.util.Log
 import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.RequestQueue
-import com.android.volley.toolbox.HttpHeaderParser
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
-import hi.netkaffi.entities.Product
-import java.security.Provider
 import hi.netkaffi.entities.User
 import hi.netkaffi.service.api.UserCallback
 import org.json.JSONObject
 import java.io.UnsupportedEncodingException
-import java.nio.charset.Charset
 
 class UserService {
 
     var context: Context? = null
-    var apiRequestQueue: RequestQueue? = null
+    private var apiRequestQueue: RequestQueue? = null
 
     object ActiveUser {
         private var user: User? = null
@@ -50,7 +42,7 @@ class UserService {
     fun login(user: User, callback: UserCallback){
         val apiRequestQueue = this.apiRequestQueue ?: return
 
-        var headers: MutableMap<String, String> = HashMap<String, String>()
+        val headers: MutableMap<String, String> = HashMap()
         headers["Content-Type"] = "application/json"
         val request = GsonRequest(
             url = "https://hbv2-netkaffi.onrender.com/login",
@@ -75,7 +67,7 @@ class UserService {
     fun signup(user: User, callback: UserCallback){
         val apiRequestQueue = this.apiRequestQueue ?: return
 
-        var headers: MutableMap<String, String> = HashMap<String, String>()
+        val headers: MutableMap<String, String> = HashMap()
         headers["Content-Type"] = "application/json"
         val request = GsonRequest(
             url = "https://hbv2-netkaffi.onrender.com/signup",
@@ -88,8 +80,8 @@ class UserService {
                 if (it != null) {
                     callback.onSuccess(arrayOf(it))
                 } else {
-                    val errormsg = "Username already exists"
-                    Toast.makeText(context, errormsg, Toast.LENGTH_LONG).show()
+                    val errorMessage = "Username already exists"
+                    Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
                 }
             },
             errorListener = {
@@ -97,11 +89,6 @@ class UserService {
                 Log.w("ErrorResponse","$it")
                 Log.w("Response", "$response")
                 try {
-                    val errorJson = String(
-                        response.data,
-                        Charset.forName(HttpHeaderParser.parseCharset(response.headers))
-                    )
-                    val errorObj = Gson().fromJson(errorJson, Error::class.java)
                     Log.w("W","Failure")
                 } catch (e: UnsupportedEncodingException) {
                     e.printStackTrace()
