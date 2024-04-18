@@ -1,13 +1,16 @@
 package hi.netkaffi.service
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
+import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.HttpHeaderParser
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
+import hi.netkaffi.activities.BookingActivity
 import hi.netkaffi.entities.Booking
 import hi.netkaffi.entities.BookingDTO
 import hi.netkaffi.service.api.BookingCallback
@@ -71,7 +74,11 @@ class BookingService {
             jsonPayload = JSONObject(Gson().toJson(booking)),
             listener = {
                 Log.i("Booking response", "$it")
-                callback.onSuccess(arrayOf(it))
+                if(it != null) {
+                    callback.onSuccess(arrayOf(it))
+                } else {
+                    Toast.makeText(context,"Computer already booked at this time", Toast.LENGTH_LONG).show()
+                }
             },
             errorListener = {
                 val response = it.networkResponse
@@ -105,8 +112,12 @@ class BookingService {
             headers = headers,
             jsonPayload = JSONObject(Gson().toJson(booking)),
             listener = {
-                Log.i("Booking response", "$it")
-                callback.onSuccess(arrayOf(it))
+                if(it != null){
+                    Log.i("Booking response", "$it")
+                    callback.onSuccess(arrayOf(it))
+                } else {
+                    Toast.makeText(context,"Computer already booked for this time", Toast.LENGTH_LONG).show()
+                }
             },
             errorListener = {
                 val response = it.networkResponse

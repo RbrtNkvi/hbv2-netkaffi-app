@@ -6,10 +6,10 @@ import java.sql.Timestamp
 class Booking(
     var user: User,
     var product: Product,
-    var startTime: Long,
+    var starttime: Long,
 ) {
     fun toStringFormat(): String{
-        val timestamp = Timestamp(startTime)
+        val timestamp = Timestamp(starttime)
         val date = Date(timestamp.time)
         return "${product.name} $date"
     }

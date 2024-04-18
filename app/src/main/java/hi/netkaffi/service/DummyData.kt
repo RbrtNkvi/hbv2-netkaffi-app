@@ -14,7 +14,7 @@ class DummyData {
         fun getBookingsNames(): ArrayList<String> {
             val names = ArrayList<String>()
             for (booking in list) {
-                names.add(booking.product.name + " " + booking.startTime)
+                names.add(booking.product.name + " " + booking.starttime)
             }
             return names
         }
