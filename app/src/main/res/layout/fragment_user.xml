@@ -38,20 +38,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/favouriteList"
-        app:layout_constraintVertical_bias="0.187"
-       />
-    <ImageView
-        android:id="@+id/logoutLogo"
-        android:layout_width="37dp"
-        android:layout_height="32dp"
-        app:layout_constraintBottom_toBottomOf="@id/button"
-        app:layout_constraintEnd_toEndOf="@id/button"
-        app:layout_constraintHorizontal_bias="0.047"
-        app:layout_constraintStart_toStartOf="@id/button"
-        app:layout_constraintTop_toTopOf="@id/button"
-        app:layout_constraintVertical_bias="0.5"
-        app:srcCompat="@drawable/logout"
-        android:elevation="4dp"/>
+        app:layout_constraintVertical_bias="0.187" />
 
     <ImageView
         android:id="@+id/imageView2"
