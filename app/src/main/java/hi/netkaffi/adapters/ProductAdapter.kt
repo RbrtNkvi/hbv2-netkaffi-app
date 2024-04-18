@@ -1,3 +1,5 @@
+package hi.netkaffi.adapters
+
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -11,7 +13,6 @@ import hi.netkaffi.activities.BookingActivity
 import hi.netkaffi.entities.Favourite
 import hi.netkaffi.service.FavouriteService
 import hi.netkaffi.service.UserService
-import hi.netkaffi.service.dummyData
 
 class ProductAdapter(context: Context, private val products: ArrayList<String>, private val favouriteComputers: ArrayList<String>) :
     ArrayAdapter<String>(context, R.layout.item_product, products) {
@@ -29,7 +30,6 @@ class ProductAdapter(context: Context, private val products: ArrayList<String>, 
         val product = products[position]
         productNameTextView.text = product
 
-        // Set favorite icon based on whether the product is favorited
         if (favouriteComputers.contains(product)) {
             heartButton.isSelected = true
             heartButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_favorite_filled, 0, 0, 0)
@@ -41,10 +41,10 @@ class ProductAdapter(context: Context, private val products: ArrayList<String>, 
         val favouriteService = FavouriteService()
         favouriteService.initialize(context)
         val user = UserService.ActiveUser.getUser()
-        // Set click listener for the heartButton
+
         heartButton.setOnClickListener {
             if (favouriteComputers.contains(product)) {
-                // Product is already favorited, deselect it
+
                 if(user != null) {
                     favouriteService.deleteFavourite(Favourite(user.username,product), callback = {
                         heartButton.isSelected = false
@@ -52,7 +52,7 @@ class ProductAdapter(context: Context, private val products: ArrayList<String>, 
                     })
                 }
             } else {
-                // Product is not favorited, select it
+
                 if(user != null) {
                     favouriteService.addFavourite(user.username,product,callback={
                         heartButton.isSelected = true

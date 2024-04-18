@@ -2,9 +2,6 @@ package hi.netkaffi.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.ImageButton
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -12,14 +9,12 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import hi.netkaffi.R
-import hi.netkaffi.databinding.ActivityMainBinding
 import hi.netkaffi.databinding.ActivityMainUserBinding
 import hi.netkaffi.databinding.ActivityQrBinding
 
 class UserActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityMainUserBinding
-    private lateinit var binding2: ActivityQrBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +44,7 @@ class UserActivity: AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         setContentView(binding.root)
     }

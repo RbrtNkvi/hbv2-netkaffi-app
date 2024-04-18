@@ -1,5 +1,6 @@
 package hi.netkaffi.ui.user
 
+//noinspection SuspiciousImport
 import android.R
 import android.content.Intent
 import android.os.Bundle
@@ -12,18 +13,13 @@ import androidx.fragment.app.Fragment
 import hi.netkaffi.activities.AdminActivity
 import hi.netkaffi.activities.LoginActivity
 import hi.netkaffi.activities.UserActivity
-import hi.netkaffi.databinding.FragmentDashboardBinding
 import hi.netkaffi.databinding.FragmentUserBinding
-import hi.netkaffi.entities.User
 import hi.netkaffi.service.FavouriteService
 import hi.netkaffi.service.UserService
 
 class UserFragment: Fragment() {
 
     private var _binding: FragmentUserBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -42,7 +38,7 @@ class UserFragment: Fragment() {
         val user = UserService.ActiveUser.getUser()
         if(user != null) {
             favouriteService.fetchFavourites(user.username, callback = {
-                val favourites = it.map{favs->"${favs.username} ${favs.productName}"}.toCollection(ArrayList())
+                val favourites = it.map{favourites->"${favourites.username} ${favourites.productName}"}.toCollection(ArrayList())
                 val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(
                     context,
                     R.layout.simple_list_item_1,
