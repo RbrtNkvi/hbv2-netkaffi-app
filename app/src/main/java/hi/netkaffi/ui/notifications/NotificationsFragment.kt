@@ -9,20 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import hi.netkaffi.activities.AdminActivity
 import hi.netkaffi.activities.NewProductActivity
 import hi.netkaffi.databinding.FragmentNotificationsBinding
 import hi.netkaffi.entities.Product
 import hi.netkaffi.service.ProductService
-import hi.netkaffi.service.api.ProductCallback
 
 class NotificationsFragment : Fragment() {
 
     private var _binding: FragmentNotificationsBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     private val productService = ProductService()
@@ -32,28 +28,26 @@ class NotificationsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val notificationsViewModel =
-            ViewModelProvider(this).get(NotificationsViewModel::class.java)
 
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         val root: View = binding.root
         val context = context as AdminActivity
 
         productService.initialize(context)
-        productService.fetchProducts(url = "products", callback = ProductCallback {
-            val products = (it.map { it.name }).toCollection(ArrayList())
+        productService.fetchProducts(url = "products", callback = { it1 ->
+            val products = (it1.map { it.name }).toCollection(ArrayList())
             val arrayAdapter = ArrayAdapter(
                 context,
                 R.layout.simple_list_item_1 ,products)
             val listView = binding.productList
             listView.adapter = arrayAdapter
-            listView.setOnItemClickListener { adapterView, view, i, l ->
-                deleteProduct(products[i], it[i])
+            listView.setOnItemClickListener { _, _, i, _ ->
+                deleteProduct(products[i], it1[i])
             }
         })
 
         val button = binding.addProduct
-        button.setOnClickListener { view ->
+        button.setOnClickListener { _ ->
             val intent = Intent(context, NewProductActivity::class.java)
             startActivity(intent)
         }
@@ -65,7 +59,7 @@ class NotificationsFragment : Fragment() {
         _binding = null
     }
 
-    fun deleteProduct(name: String, product: Product){
+    private fun deleteProduct(name: String, product: Product){
         productService.deleteProduct(url = name, product = product, callback = {
             val intent = Intent(context, AdminActivity::class.java)
             startActivity(intent)

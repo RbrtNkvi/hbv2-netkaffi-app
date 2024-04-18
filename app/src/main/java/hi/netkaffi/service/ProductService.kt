@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import com.android.volley.Request
 import com.android.volley.RequestQueue
-import com.android.volley.toolbox.HttpHeaderParser
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
@@ -12,11 +11,10 @@ import hi.netkaffi.entities.Product
 import hi.netkaffi.service.api.ProductCallback
 import org.json.JSONObject
 import java.io.UnsupportedEncodingException
-import java.nio.charset.Charset
 
 class ProductService {
     var context: Context? = null
-    var apiRequestQueue: RequestQueue? = null
+    private var apiRequestQueue: RequestQueue? = null
 
     fun initialize(context: Context){
         this.context = context
@@ -26,7 +24,7 @@ class ProductService {
     fun fetchProducts(url: String,callback: ProductCallback){
         val apiRequestQueue = this.apiRequestQueue ?: return
 
-        var headers: MutableMap<String, String> = HashMap<String, String>()
+        val headers: MutableMap<String, String> = HashMap()
         headers["Content-Type"] = "application/json"
         val request = GsonRequest(
             url = "https://hbv2-netkaffi.onrender.com/$url",
@@ -42,11 +40,6 @@ class ProductService {
                 Log.w("ErrorResponse","$it")
                 Log.w("Response", "$response")
                 try {
-                    val errorJson = String(
-                        response.data,
-                        Charset.forName(HttpHeaderParser.parseCharset(response.headers))
-                    )
-                    val errorObj = Gson().fromJson(errorJson, Error::class.java)
                     Log.w("W","Failure")
                 } catch (e: UnsupportedEncodingException) {
                     e.printStackTrace()
@@ -61,7 +54,7 @@ class ProductService {
     fun fetchProduct(url: String, callback: ProductCallback){
         val apiRequestQueue = this.apiRequestQueue ?: return
 
-        var headers: MutableMap<String, String> = HashMap<String, String>()
+        val headers: MutableMap<String, String> = HashMap()
         headers["Content-Type"] = "application/json"
         val request = GsonRequest(
             url = "https://hbv2-netkaffi.onrender.com/$url",
@@ -77,11 +70,6 @@ class ProductService {
                 Log.w("ErrorResponse","$it")
                 Log.w("Response", "$response")
                 try {
-                    val errorJson = String(
-                        response.data,
-                        Charset.forName(HttpHeaderParser.parseCharset(response.headers))
-                    )
-                    val errorObj = Gson().fromJson(errorJson, Error::class.java)
                     Log.w("W","Failure")
                 } catch (e: UnsupportedEncodingException) {
                     e.printStackTrace()
@@ -95,7 +83,7 @@ class ProductService {
 
     fun deleteProduct(url: String, product: Product, callback: ProductCallback){
         val apiRequestQueue = this.apiRequestQueue ?: return
-        var headers: MutableMap<String, String> = HashMap<String, String>()
+        val headers: MutableMap<String, String> = HashMap()
         headers["Content-Type"] = "application/json"
         val request = GsonRequest(
             url = "https://hbv2-netkaffi.onrender.com/delete/$url",
@@ -111,11 +99,6 @@ class ProductService {
                 Log.w("ErrorResponse","$it")
                 Log.w("Response", "$response")
                 try {
-                    val errorJson = String(
-                        response.data,
-                        Charset.forName(HttpHeaderParser.parseCharset(response.headers))
-                    )
-                    val errorObj = Gson().fromJson(errorJson, Error::class.java)
                     Log.w("W","Failure")
                 } catch (e: UnsupportedEncodingException) {
                     e.printStackTrace()
@@ -129,7 +112,7 @@ class ProductService {
 
     fun addProduct(product: Product, callback: ProductCallback){
         val apiRequestQueue = this.apiRequestQueue ?: return
-        var headers: MutableMap<String, String> = HashMap<String, String>()
+        val headers: MutableMap<String, String> = HashMap()
         headers["Content-Type"] = "application/json"
         val request = GsonRequest(
             url = "https://hbv2-netkaffi.onrender.com/addproduct",
@@ -145,11 +128,6 @@ class ProductService {
                 Log.w("ErrorResponse","$it")
                 Log.w("Response", "$response")
                 try {
-                    val errorJson = String(
-                        response.data,
-                        Charset.forName(HttpHeaderParser.parseCharset(response.headers))
-                    )
-                    val errorObj = Gson().fromJson(errorJson, Error::class.java)
                     Log.w("W","Failure")
                 } catch (e: UnsupportedEncodingException) {
                     e.printStackTrace()

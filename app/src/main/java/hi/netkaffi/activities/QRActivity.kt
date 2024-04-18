@@ -49,6 +49,7 @@ class QRActivity: AppCompatActivity() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         super.onBackPressed()
         Toast.makeText(this,"Im going back", Toast.LENGTH_LONG).show()
@@ -64,20 +65,20 @@ class QRActivity: AppCompatActivity() {
         qrScanner.isFlashEnabled = false
         qrScanner.decodeCallback = DecodeCallback {
             runOnUiThread {
-                Toast.makeText(this, "${it.text}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, it.text, Toast.LENGTH_SHORT).show()
                 //val textView: TextView = findViewById(R.id.qrResults)
                 //textView.movementMethod = LinkMovementMethod.getInstance()
                 //textView.text = Html.fromHtml("${it.text}")
 
                 val intentBooking= Intent(this, BookingActivity::class.java)
-                intentBooking.putExtra("product","${it.text}")
+                intentBooking.putExtra("product", it.text)
                 startActivity(intentBooking)
 
             }
         }
         qrScanner.errorCallback = ErrorCallback {
             runOnUiThread {
-                Toast.makeText(this, "Camera initilization error ${it.message}", Toast.LENGTH_LONG)
+                Toast.makeText(this, "Camera initialization error ${it.message}", Toast.LENGTH_LONG)
                     .show()
             }
         }

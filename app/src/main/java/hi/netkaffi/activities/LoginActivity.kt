@@ -8,16 +8,15 @@ import androidx.appcompat.app.AppCompatActivity
 import hi.netkaffi.R
 import hi.netkaffi.entities.User
 import hi.netkaffi.service.UserService
-import hi.netkaffi.service.api.UserCallback
 
 class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        setTitle(R.string.login_button);
+        setTitle(R.string.login_button)
 
-        val buttonSignup = findViewById<Button>(R.id.signup_button);
+        val buttonSignup = findViewById<Button>(R.id.signup_button)
         buttonSignup.setOnClickListener{
 
             val intentSignup = Intent(this, SignupActivity::class.java)
@@ -27,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
         val userService = UserService()
         userService.initialize(this)
 
-        val buttonMain = findViewById<Button>(R.id.login_button);
+        val buttonMain = findViewById<Button>(R.id.login_button)
         buttonMain.setOnClickListener{
 
             val  username = findViewById<EditText>(R.id.login_username).getText().toString()
@@ -35,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
 
             val user = User(username,password)
 
-            userService.login(user, callback = UserCallback {
+            userService.login(user, callback = {
                 UserService.ActiveUser.setUser(it[0])
                 if( it[0].isAdmin == true ){
                     val intentAdmin = Intent(this, AdminActivity::class.java)
@@ -48,8 +47,5 @@ class LoginActivity : AppCompatActivity() {
             })
 
         }
-
-
     }
-
 }

@@ -7,22 +7,15 @@ import com.android.volley.Response
 import com.android.volley.toolbox.HttpHeaderParser
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
-import org.json.JSONArray
 import org.json.JSONObject
 import java.io.UnsupportedEncodingException
 import java.nio.charset.Charset
 
-/**
- * Make ANY request and return a parsed object from JSON.
- *
- * @param url URL of the request to make
- * @param clazz Relevant class object, for Gson's reflection
- * @param headers Map of request headers
- */
+
 class GsonRequest<T>(
     url: String,
     private val clazz: Class<T>,
-    private val method: Int,
+    method: Int,
     private val headers: MutableMap<String, String>?,
     private val jsonPayload: JSONObject?,
     private val listener: Response.Listener<T>,
