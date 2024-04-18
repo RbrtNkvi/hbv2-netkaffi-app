@@ -25,6 +25,7 @@ import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
 import hi.netkaffi.R
 import hi.netkaffi.databinding.ActivityQrCameraBinding
+import hi.netkaffi.service.UserService
 
 
 class QRActivity: AppCompatActivity() {
@@ -71,10 +72,17 @@ class QRActivity: AppCompatActivity() {
                 //textView.text = Html.fromHtml("${it.text}")
                 //val intentBack= Intent(this, UserActivity::class.java)
 
-                val intentBooking= Intent(this, BookingActivity::class.java)
-                intentBooking.putExtra("product", it.text)
-                intentBooking.putExtra("productName", it.text)
-                startActivity(intentBooking)
+                if(UserService.ActiveUser.isAdmin() == true){
+                    Toast.makeText(this, "${it.text}", Toast.LENGTH_SHORT).show()
+                    val textView: TextView = findViewById(R.id.qrResults)
+                    textView.movementMethod = LinkMovementMethod.getInstance()
+                    textView.text = Html.fromHtml("${it.text}")
+
+                } else {
+                    val intentBooking= Intent(this, BookingActivity::class.java)
+                    intentBooking.putExtra("productName","${it.text}")
+                    startActivity(intentBooking)
+                }
             }
         }
         qrScanner.errorCallback = ErrorCallback {

@@ -113,6 +113,10 @@ class BookingActivity : AppCompatActivity() {
                         })
                 }
             }
+            binding.backFromBookingButton.setOnClickListener(){
+                val intent = Intent(this, if(UserService.ActiveUser.isAdmin() == true) AdminActivity::class.java else UserActivity::class.java)
+                startActivity(intent)
+            }
 
             binding.pickDate.setOnClickListener {
                 showDatePickerDialog(binding.pickDate)
