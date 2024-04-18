@@ -8,11 +8,6 @@ import hi.netkaffi.entities.Product
 import hi.netkaffi.service.ProductService
 
 class NewProductActivity: AppCompatActivity() {
-    private var _binding: ActivityNewproductBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
 
     override fun onCreate( savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -27,9 +22,9 @@ class NewProductActivity: AppCompatActivity() {
         productService.initialize(this)
 
 
-        button.setOnClickListener { view ->
+        button.setOnClickListener { _ ->
 
-            val product = Product(productName.text.toString(), "default", productPrice.text.toString().toInt(), false)
+            val product = Product(productName.text.toString(), productPrice.text.toString().toInt(), false)
             productService.addProduct(product, callback = {
                 val intent = Intent(this, AdminActivity::class.java)
                 startActivity(intent)

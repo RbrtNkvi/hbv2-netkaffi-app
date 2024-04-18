@@ -10,18 +10,15 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import hi.netkaffi.entities.Booking
 import hi.netkaffi.entities.BookingDTO
-import hi.netkaffi.entities.Product
-import hi.netkaffi.entities.User
 import hi.netkaffi.service.api.BookingCallback
 import hi.netkaffi.service.api.BookingDTOCallback
-import hi.netkaffi.service.api.ProductCallback
 import org.json.JSONObject
 import java.io.UnsupportedEncodingException
 import java.nio.charset.Charset
 
 class BookingService {
     var context: Context? = null
-    var apiRequestQueue: RequestQueue? = null
+    private var apiRequestQueue: RequestQueue? = null
 
     fun initialize(context: Context){
         this.context = context
@@ -31,7 +28,7 @@ class BookingService {
     fun fetchBookings(user: String, callback: BookingDTOCallback){
         val apiRequestQueue = this.apiRequestQueue ?: return
 
-        var headers: MutableMap<String, String> = HashMap<String, String>()
+        val headers: MutableMap<String, String> = HashMap<String, String>()
         val request = GsonRequest(
             url = "https://hbv2-netkaffi.onrender.com/booked/$user",
             clazz = Array<BookingDTO>::class.java,
@@ -64,7 +61,7 @@ class BookingService {
 
     fun addBooking(booking: Booking, callback: BookingCallback){
         val apiRequestQueue = this.apiRequestQueue ?: return
-        var headers: MutableMap<String, String> = HashMap<String, String>()
+        val headers: MutableMap<String, String> = HashMap<String, String>()
         headers["Content-Type"] = "application/json"
         val request = GsonRequest(
             url = "https://hbv2-netkaffi.onrender.com/book",
@@ -99,7 +96,7 @@ class BookingService {
 
     fun deleteBooking(booking: BookingDTO, callback: BookingDTOCallback){
         val apiRequestQueue = this.apiRequestQueue ?: return
-        var headers: MutableMap<String, String> = HashMap<String, String>()
+        val headers: MutableMap<String, String> = HashMap<String, String>()
         headers["Content-Type"] = "application/json"
         val request = GsonRequest(
             url = "https://hbv2-netkaffi.onrender.com/booked/delete",
