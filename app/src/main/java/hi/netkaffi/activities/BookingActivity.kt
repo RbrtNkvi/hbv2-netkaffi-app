@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.NumberPicker
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import hi.netkaffi.R
@@ -45,6 +46,7 @@ class BookingActivity : AppCompatActivity() {
 
         val productService = ProductService()
         productService.initialize(context)
+
         productService.fetchProduct("book/$productName", callback = {
             if (it.isNotEmpty()) {
                 textProductName.text = it[0].name
@@ -98,6 +100,12 @@ class BookingActivity : AppCompatActivity() {
             }
         })
     }
+    //val intentBack = Intent(this,  if(UserService.ActiveUser.isAdmin() == false) UserActivity::class.java else AdminActivity::class.java)
+
+
+    //override fun onBackPressed() {
+    //    super.onBackPressed()
+    //}
 
     private fun showDatePickerDialog(dateTextView: TextView) {
         val currentDate = Calendar.getInstance()

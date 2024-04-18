@@ -51,7 +51,6 @@ class QRActivity: AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        Toast.makeText(this,"Im going back", Toast.LENGTH_LONG).show()
     }
     private fun startScanning() {
         val scannerView: CodeScannerView = findViewById(R.id.qrScannerView)
@@ -64,15 +63,15 @@ class QRActivity: AppCompatActivity() {
         qrScanner.isFlashEnabled = false
         qrScanner.decodeCallback = DecodeCallback {
             runOnUiThread {
-                Toast.makeText(this, "${it.text}", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "${it.text}", Toast.LENGTH_SHORT).show()
                 //val textView: TextView = findViewById(R.id.qrResults)
                 //textView.movementMethod = LinkMovementMethod.getInstance()
                 //textView.text = Html.fromHtml("${it.text}")
+                //val intentBack= Intent(this, UserActivity::class.java)
 
                 val intentBooking= Intent(this, BookingActivity::class.java)
-                intentBooking.putExtra("product","${it.text}")
+                intentBooking.putExtra("productName","${it.text}")
                 startActivity(intentBooking)
-
             }
         }
         qrScanner.errorCallback = ErrorCallback {
@@ -110,7 +109,6 @@ class QRActivity: AppCompatActivity() {
             qrScanner.startPreview()
         }
     }
-
     override fun onPause() {
         if (::qrScanner.isInitialized){
             qrScanner.releaseResources()
