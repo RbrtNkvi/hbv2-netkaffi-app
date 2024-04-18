@@ -25,6 +25,7 @@ import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
 import hi.netkaffi.R
 import hi.netkaffi.databinding.ActivityQrCameraBinding
+import hi.netkaffi.service.UserService
 
 
 class QRActivity: AppCompatActivity() {
@@ -49,6 +50,7 @@ class QRActivity: AppCompatActivity() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         super.onBackPressed()
     }
@@ -63,20 +65,29 @@ class QRActivity: AppCompatActivity() {
         qrScanner.isFlashEnabled = false
         qrScanner.decodeCallback = DecodeCallback {
             runOnUiThread {
+                Toast.makeText(this, it.text, Toast.LENGTH_SHORT).show()
                 //Toast.makeText(this, "${it.text}", Toast.LENGTH_SHORT).show()
                 //val textView: TextView = findViewById(R.id.qrResults)
                 //textView.movementMethod = LinkMovementMethod.getInstance()
                 //textView.text = Html.fromHtml("${it.text}")
                 //val intentBack= Intent(this, UserActivity::class.java)
 
-                val intentBooking= Intent(this, BookingActivity::class.java)
-                intentBooking.putExtra("productName","${it.text}")
-                startActivity(intentBooking)
+                if(UserService.ActiveUser.isAdmin() == true){
+                    Toast.makeText(this, "${it.text}", Toast.LENGTH_SHORT).show()
+                    val textView: TextView = findViewById(R.id.qrResults)
+                    textView.movementMethod = LinkMovementMethod.getInstance()
+                    textView.text = Html.fromHtml("${it.text}")
+
+                } else {
+                    val intentBooking= Intent(this, BookingActivity::class.java)
+                    intentBooking.putExtra("productName","${it.text}")
+                    startActivity(intentBooking)
+                }
             }
         }
         qrScanner.errorCallback = ErrorCallback {
             runOnUiThread {
-                Toast.makeText(this, "Camera initilization error ${it.message}", Toast.LENGTH_LONG)
+                Toast.makeText(this, "Camera initialization error ${it.message}", Toast.LENGTH_LONG)
                     .show()
             }
         }
