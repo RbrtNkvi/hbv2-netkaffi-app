@@ -7,28 +7,110 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/cost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="Cost of computer (kr):"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.241"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/productName"
+        app:layout_constraintVertical_bias="0.039" />
+
+    <TextView
         android:id="@+id/productName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.314"
+        app:layout_constraintHorizontal_bias="0.168"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.143" />
+        app:layout_constraintVertical_bias="0.145" />
 
     <TextView
         android:id="@+id/productPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.773"
+        app:layout_constraintHorizontal_bias="0.355"
+        app:layout_constraintStart_toEndOf="@+id/cost"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.21" />
+
+    <Button
+        android:id="@+id/bookingButton"
+        android:layout_width="147dp"
+        android:layout_height="65dp"
+        android:text="Book"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.143" />
+        app:layout_constraintVertical_bias="0.767" />
+
+    <Button
+        android:id="@+id/back_from_booking_button"
+        android:layout_width="144dp"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"
+        android:text="@string/back"
+        android:textColor="@color/design_default_color_primary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.858" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="109dp"
+        android:layout_height="125dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.338"
+        app:layout_constraintStart_toEndOf="@+id/time"
+        app:layout_constraintTop_toBottomOf="@+id/pickDate"
+        app:layout_constraintVertical_bias="0.196">
+
+        <NumberPicker
+            android:id="@+id/picker"
+            android:layout_width="wrap_content"
+            android:layout_height="92dp"
+            android:layout_gravity="center"
+
+            android:solidColor="#018786" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="What time:"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.266"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pickDate"
+        app:layout_constraintVertical_bias="0.235" />
 
     <Button
         android:id="@+id/pickDate"
@@ -37,56 +119,10 @@
         android:text="Pick date"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.214"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.336" />
-
-    <Button
-        android:id="@+id/bookingButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Book"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.748" />
-
-    <TextView
-        android:id="@+id/klukkan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="At what time?"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.806"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.951" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="109dp"
-        android:layout_height="125dp"
-        android:layout_marginTop="84dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.579"
-        app:layout_constraintStart_toEndOf="@+id/pickDate"
-        app:layout_constraintTop_toBottomOf="@+id/productPrice"
-        app:layout_constraintVertical_bias="0.0">
-
-        <NumberPicker
-            android:id="@+id/picker1"
-            android:layout_width="wrap_content"
-            android:layout_height="92dp"
-            android:layout_gravity="center"
-
-            android:solidColor="#00FF00" />
-    </LinearLayout>
+        app:layout_constraintVertical_bias="0.344" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
